@@ -1,45 +1,47 @@
+import styles from '../../styles/forms.module.css';
+
 const PasswordUpdateForm = () => {
 
     return (
-        <section class="container mt-5">
-            <div class="row">
-                <div class="col-md-8 m-auto">
-                    <div class="card bg-white py-2 px-4">
-                        <div class="card-body">
-                            <h1 class="mb-2">Update Password</h1>
+        <section className={`form mt-5 ${styles.custom_mt}`}>
+            <div className="row">
+                <div className="col-md-8 m-auto">
+                    <div className="card bg-white py-2 px-4">
+                        <div className="card-body">
+                            <h1 className="mb-2">Update Password</h1>
                             <form>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label>Current Password</label>
                                     <input
                                         type="password"
                                         name="password"
-                                        class="form-control"
+                                        className="form-control"
                                         placeholder="Current Password"
                                     />
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label>New Password</label>
                                     <input
                                         type="password"
                                         name="newPassword"
-                                        class="form-control"
+                                        className="form-control"
                                         placeholder="New Password"
                                     />
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label>Confirm New Password</label>
                                     <input
                                         type="password"
                                         name="newPassword2"
-                                        class="form-control"
+                                        className="form-control"
                                         placeholder="Confirm New Password"
                                     />
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <input
                                         type="submit"
                                         value="Update Password"
-                                        class="btn btn-dark btn-block"
+                                        className="btn btn-dark btn-block"
                                     />
                                 </div>
                             </form>

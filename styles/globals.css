@@ -9,6 +9,10 @@
 	--danger: #dc3545 !important;
 }
 
+body {
+	background-color: #f8f9fa !important;
+}
+
 .bg-primary,
 .btn-primary {
     background-color: var(--primary) !important;
