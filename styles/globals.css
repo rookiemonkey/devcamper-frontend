@@ -1,0 +1,15 @@
+/* USE THIS TO OVERWRITE BOOTSTRAP NATIVE STYLES/CLASSES */
+
+:root {
+	--primary: #E05433 !important;
+	--secondary: #6c757d !important;
+	--success: #28a745 !important;
+	--info: #17a2b8 !important;
+	--warning: #ffc107 !important;
+	--danger: #dc3545 !important;
+}
+
+.bg-primary,
+.btn-primary {
+    background-color: var(--primary) !important;
+}

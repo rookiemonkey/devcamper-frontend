@@ -6,7 +6,7 @@ const PasswordResetForm = () => {
                 <div class="col-md-8 m-auto">
                     <div class="card bg-white py-2 px-4">
                         <div class="card-body">
-                            <a href="login.html">Back to login</a>
+                            <a href="/login">Back to login</a>
                             <h1 class="mb-2">Reset Password</h1>
                             <p>	Use this form to reset your password using the registered email address.</p>
                             <form>

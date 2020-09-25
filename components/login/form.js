@@ -41,7 +41,7 @@ const LoginForm = () => {
                                         />
                                     </div>
                                 </form>
-                                <p>	Forgot Password? <a href="reset-password.html">Reset Password</a></p>
+                                <p>	Forgot Password? <a href="/password_reset">Reset Password</a></p>
                             </div>
                         </div>
                     </div>
