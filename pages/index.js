@@ -5,7 +5,7 @@ import Latest from '../components/index/Latest';
 
 function Home() {
   return (
-    <div>
+    <main>
       <Head>
         <title>DevCamper - Home</title>
       </Head>
@@ -16,7 +16,7 @@ function Home() {
 
       <Latest />
 
-    </div>
+    </main>
   )
 }
 
