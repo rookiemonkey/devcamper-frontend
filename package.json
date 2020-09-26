@@ -13,6 +13,7 @@
     "next": "9.5.3",
     "popper.js": "^1.14.3",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "react-toastify": "^6.0.8"
   }
 }

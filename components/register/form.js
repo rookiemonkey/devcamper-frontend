@@ -1,6 +1,53 @@
 import styles from '../../styles/forms.module.css';
+import { useState, useCallback } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import toasterConfiguration from '../_toaster';
 
 const RegisterForm = () => {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordConfirm, setPasswordConfirm] = useState('');
+    const [role, setRole] = useState('');
+
+    const handleChange = useCallback(event => {
+        const { name, value } = event.target;
+
+        switch (name) {
+            case 'name': setName(value); break;
+            case 'email': setEmail(value); break;
+            case 'password': setPassword(value); break;
+            case 'passwordConfirm': setPasswordConfirm(value); break;
+            case 'role': setRole(value); break;
+            default: null;
+        }
+    })
+
+    const success = message => toast.success(message, toasterConfiguration);
+    const error = message => toast.error(message, toasterConfiguration);
+
+    const handleSubmit = useCallback(async event => {
+        event.preventDefault();
+
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify({ name, email, password, passwordConfirm, role })
+        }
+
+        const raw = await fetch(`http://localhost:5000/api/v1/auth/signup`, options)
+
+        const parsed = await raw.json();
+
+        if (!parsed.success)
+            return error(parsed.msg)
+
+        success('Successfully registered')
+    })
+
     return (
         <section className={`form mt-5 ${styles.custom_mt}`}>
             <div className="container">
@@ -8,12 +55,14 @@ const RegisterForm = () => {
                     <div className="col-md-6 m-auto">
                         <div className="card bg-white p-4 mb-4">
                             <div className="card-body">
+
+                                <ToastContainer />
+
                                 <h1><i className="fas fa-user-plus"></i> Register</h1>
                                 <p>
-                                    Register to list your bootcamp or rate, review and favorite
-                                    bootcamps
+                                    Register to list your bootcamp, rate, review and give a like on your favorite bootcamps
 								</p>
-                                <form>
+                                <form onSubmit={handleSubmit} method="POST">
                                     <div className="form-group">
                                         <label htmlFor="name">Name</label>
                                         <input
@@ -21,6 +70,7 @@ const RegisterForm = () => {
                                             name="name"
                                             className="form-control"
                                             placeholder="Enter full name"
+                                            onChange={handleChange}
                                             required
                                         />
                                     </div>
@@ -31,6 +81,7 @@ const RegisterForm = () => {
                                             name="email"
                                             className="form-control"
                                             placeholder="Enter email"
+                                            onChange={handleChange}
                                             required
                                         />
                                     </div>
@@ -41,16 +92,19 @@ const RegisterForm = () => {
                                             name="password"
                                             className="form-control"
                                             placeholder="Enter password"
+                                            onChange={handleChange}
                                             required
                                         />
+                                        <small>Password should be at least 8 characters</small>
                                     </div>
                                     <div className="form-group mb-4">
                                         <label htmlFor="password2">Confirm Password</label>
                                         <input
                                             type="password"
-                                            name="password2"
+                                            name="passwordConfirm"
                                             className="form-control"
                                             placeholder="Confirm password"
+                                            onChange={handleChange}
                                             required
                                         />
                                     </div>
@@ -63,7 +117,8 @@ const RegisterForm = () => {
                                                 type="radio"
                                                 name="role"
                                                 value="user"
-                                                checked
+                                                onChange={handleChange}
+                                                checked={role === 'user'}
                                             />
                                             <label className="form-check-label">
                                                 Regular User (Browse, Write reviews, etc)
@@ -75,6 +130,8 @@ const RegisterForm = () => {
                                                 type="radio"
                                                 name="role"
                                                 value="publisher"
+                                                onChange={handleChange}
+                                                checked={role === 'publisher'}
                                             />
                                             <label className="form-check-label">
                                                 Bootcamp Publisher
@@ -82,8 +139,7 @@ const RegisterForm = () => {
                                         </div>
                                     </div>
                                     <p className="text-danger">
-                                        * You must be affiliated with the bootcamp in some way in
-                                        order to add it to DevCamper.
+                                        * You must be affiliated with the bootcamp in some way in order to add it to DevCamper.
 									</p>
                                     <div className="form-group">
                                         <input

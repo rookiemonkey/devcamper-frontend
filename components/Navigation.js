@@ -15,16 +15,22 @@ const Navigation = () => {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item">
-                            <a className="nav-link" href="/login"><i className="fas fa-sign-in-alt"></i> Login</a>
+                            <a className="nav-link" href="/login">
+                                <i className="fas fa-sign-in-alt"></i>
+                                &nbsp; Login
+                            </a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/register"><i className="fas fa-user-plus"></i> Register</a>
-                        </li>
-                        <li className="nav-item d-none d-sm-block">
-                            <a className="nav-link" href="#">|</a>
+                            <a className="nav-link" href="/register">
+                                <i className="fas fa-user-plus"></i>
+                                &nbsp; Register
+                            </a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="bootcamps.html">Browse Bootcamps</a>
+                            <a className="nav-link" href="bootcamps.html">
+                                <i class="fas fa-search"></i>
+                                &nbsp; Browse Bootcamps
+                            </a>
                         </li>
                     </ul>
                 </div>
