@@ -1,4 +1,5 @@
 import styles from '../../styles/forms.module.css';
+import { useRouter } from 'next/router';
 import { useState, useCallback } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import useAuth from '../../context/auth';
@@ -6,7 +7,8 @@ import API_URL, { API_OPTIONS } from '../../api/api';
 import toasterConfiguration from '../_toaster';
 
 const RegisterForm = (props) => {
-    const context = useAuth();
+    const router = useRouter()
+    const AuthContext = useAuth();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -47,9 +49,9 @@ const RegisterForm = (props) => {
             return error(parsed.msg)
         }
 
-        context.handleSetToken(parsed.token)
+        AuthContext.handleSetToken(parsed.token)
         toast.dismiss(infoId)
-        success('Successfully registered')
+        router.push('/')
     })
 
     return (
