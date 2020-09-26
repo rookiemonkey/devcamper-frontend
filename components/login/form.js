@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import styles from '../../styles/forms.module.css';
 
 const LoginForm = () => {
@@ -43,7 +44,7 @@ const LoginForm = () => {
                                         />
                                     </div>
                                 </form>
-                                <p>	Forgot Password? <a href="/password_reset">Reset Password</a></p>
+                                <p>	Forgot Password? <Link href="/password_reset"><a>Reset Password</a></Link></p>
                             </div>
                         </div>
                     </div>

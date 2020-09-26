@@ -1,3 +1,4 @@
+import Link from 'next/link'
 const Latest = () => {
 
     return (
@@ -9,8 +10,12 @@ const Latest = () => {
                         <img src="/images/image_1.jpg" className="card-img-top" alt="..." />
                         <div className="card-body">
                             <h5 className="card-title">
-                                <a href="bootcamp.html">Devworks Bootcamp
-								<span className="float-right badge badge-success">8.8</span></a>
+                                <Link href="/">
+                                    <a>
+                                        Devworks Bootcamp
+								        <span className="float-right badge badge-success">8.8</span>
+                                    </a>
+                                </Link>
                             </h5>
                             <span className="badge badge-dark mb-2">Boston, MA</span>
                             <p className="card-text">
@@ -27,8 +32,12 @@ const Latest = () => {
                         <img src="/images/image_2.jpg" className="card-img-top" alt="..." />
                         <div className="card-body">
                             <h5 className="card-title">
-                                <a href="bootcamp.html">ModernTech Bootcamp
-								<span className="float-right badge badge-success">7.5</span></a>
+                                <Link href="/">
+                                    <a>
+                                        ModernTech Bootcamp
+								        <span className="float-right badge badge-success">7.5</span>
+                                    </a>
+                                </Link>
                             </h5>
                             <span className="badge badge-dark mb-2">Boston, MA</span>
                             <p className="card-text">
@@ -45,8 +54,12 @@ const Latest = () => {
                         <img src="/images/image_3.jpg" className="card-img-top" alt="..." />
                         <div className="card-body">
                             <h5 className="card-title">
-                                <a href="bootcamp.html">Codemasters
-								<span className="float-right badge badge-success">9.2</span></a>
+                                <Link href="/">
+                                    <a>
+                                        Codemasters
+								        <span className="float-right badge badge-success">9.2</span>
+                                    </a>
+                                </Link>
                             </h5>
                             <span className="badge badge-dark mb-2">Burlington, VT</span>
                             <p className="card-text">

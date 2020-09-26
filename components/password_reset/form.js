@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import styles from '../../styles/forms.module.css';
 
 const PasswordResetForm = () => {
@@ -8,7 +9,7 @@ const PasswordResetForm = () => {
                 <div className="col-md-8 m-auto">
                     <div className="card bg-white py-2 px-4">
                         <div className="card-body">
-                            <a href="/login">Back to login</a>
+                            <Link href="/login"><a>Back to login</a></Link>
                             <h1 className="mb-2">Reset Password</h1>
                             <p>	Use this form to reset your password using the registered email address.</p>
                             <form>
