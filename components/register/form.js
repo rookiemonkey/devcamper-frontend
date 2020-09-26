@@ -6,14 +6,17 @@ import useAuth from '../../context/auth';
 import API_URL, { API_OPTIONS } from '../../api/api';
 import toasterConfiguration from '../_toaster';
 
-const RegisterForm = (props) => {
-    const router = useRouter()
+const RegisterForm = () => {
+    const router = useRouter();
     const AuthContext = useAuth();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
     const [role, setRole] = useState('');
+
+    const error = message => toast.error(message, toasterConfiguration);
+    const info = message => toast.info(message, toasterConfiguration);
 
     const handleChange = useCallback(event => {
         const { name, value } = event.target;
@@ -28,10 +31,6 @@ const RegisterForm = (props) => {
         }
     })
 
-    const success = message => toast.success(message, toasterConfiguration);
-    const error = message => toast.error(message, toasterConfiguration);
-    const info = message => toast.info(message, toasterConfiguration);
-
     const handleSubmit = useCallback(async event => {
         event.preventDefault();
         const infoId = info('Please wait ...')
@@ -43,14 +42,13 @@ const RegisterForm = (props) => {
 
         const raw = await fetch(`${API_URL}/api/v1/auth/signup`, options)
         const parsed = await raw.json();
+        toast.dismiss(infoId)
 
         if (!parsed.success) {
-            toast.dismiss(infoId)
             return error(parsed.msg)
         }
 
-        AuthContext.handleSetToken(parsed.token)
-        toast.dismiss(infoId)
+        AuthContext.handleSetUser(parsed)
         router.push('/')
     })
 

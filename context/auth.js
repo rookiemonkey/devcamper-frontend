@@ -1,31 +1,32 @@
-import React, { createContext, useState, useContext, useEffect } from 'react'
+import React, { createContext, useState, useContext, useEffect, useCallback } from 'react'
 import Cookies from 'js-cookie'
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-
-    const [token, setToken] = useState(null)
+    const [user, setUser] = useState(null)
 
     useEffect(() => {
-        const cookieToken = Cookies.get('token')
-        cookieToken ? setToken(cookieToken) : null
+        const cookieUser = Cookies.get('token')
+        cookieUser ? setUser(JSON.parse(cookieUser)) : null
     }, [])
 
-    const handleSetToken = token => {
+    const handleSetUser = useCallback(user => {
         const cookieOptions = {
             expires: new Date(Date.now() + '2 days' * 24 * 60 * 60 * 1000),
             // httpOnly: true,  
             // secure: true 
         }
 
-        Cookies.set('token', token, cookieOptions)
-        setToken(token);
-    }
+        if (user) { Cookies.set('token', JSON.stringify(user), cookieOptions) }
+        else { Cookies.remove('token') }
+
+        setUser(user)
+    })
 
     return (
         <AuthContext.Provider
-            value={{ token, handleSetToken }}
+            value={{ user, handleSetUser }}
         >
             {children}
         </AuthContext.Provider>

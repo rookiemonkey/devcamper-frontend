@@ -1,8 +1,17 @@
 import Link from 'next/link'
+import { useCallback } from 'react';
+import { useRouter } from 'next/router';
 import useAuth from '../context/auth'
 
+
 const Navigation = () => {
+    const router = useRouter();
     const AuthContext = useAuth();
+
+    const handleLogout = useCallback(() => {
+        AuthContext.handleSetUser(null)
+        router.push('/')
+    })
 
     return (
         <nav className="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
@@ -20,16 +29,33 @@ const Navigation = () => {
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ml-auto">
+                        <li className="nav-item">
+                            <Link href="bootcamps.html">
+                                <a className="nav-link">
+                                    <i className="fas fa-search"></i>
+                                    &nbsp; Browse Bootcamps
+                                </a>
+                            </Link>
+                        </li>
 
                         {
-                            AuthContext.token
-                                ? <li className="nav-item">
-                                    <Link href="#">
-                                        <a className="nav-link">
-                                            Logged in
-                                        </a>
-                                    </Link>
-                                </li>
+                            AuthContext.user
+                                ? <React.Fragment>
+                                    <li>
+                                        <Link href="#">
+                                            <a className="nav-link" onClick={handleLogout}>
+                                                Logout
+                                            </a>
+                                        </Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link href="#">
+                                            <a className="nav-link">
+                                                Logged in
+                                            </a>
+                                        </Link>
+                                    </li>
+                                </React.Fragment>
                                 : <React.Fragment>
                                     <li className="nav-item">
                                         <Link href="/login">
@@ -49,16 +75,6 @@ const Navigation = () => {
                                     </li>
                                 </React.Fragment>
                         }
-
-
-                        <li className="nav-item">
-                            <Link href="bootcamps.html">
-                                <a className="nav-link">
-                                    <i className="fas fa-search"></i>
-                                    &nbsp; Browse Bootcamps
-                                </a>
-                            </Link>
-                        </li>
                     </ul>
                 </div>
             </div>
