@@ -28,7 +28,7 @@ const Navigation = () => {
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="bootcamps.html">
-                                <i class="fas fa-search"></i>
+                                <i className="fas fa-search"></i>
                                 &nbsp; Browse Bootcamps
                             </a>
                         </li>

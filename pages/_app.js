@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/globals.css";
 import { useEffect } from "react";
+import { AuthProvider } from '../context/auth';
 
 const MyApp = ({ Component, pageProps }) => {
 
@@ -13,7 +14,11 @@ const MyApp = ({ Component, pageProps }) => {
       });
   }, []);
 
-  return <Component {...pageProps} />;
+  return (
+    <AuthProvider>
+      <Component {...pageProps} />
+    </AuthProvider>
+  )
 }
 
 export default MyApp;

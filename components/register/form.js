@@ -1,9 +1,12 @@
 import styles from '../../styles/forms.module.css';
 import { useState, useCallback } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
+import useAuth from '../../context/auth';
+import API_URL, { API_OPTIONS } from '../../api/api';
 import toasterConfiguration from '../_toaster';
 
-const RegisterForm = () => {
+const RegisterForm = (props) => {
+    const context = useAuth();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -25,26 +28,27 @@ const RegisterForm = () => {
 
     const success = message => toast.success(message, toasterConfiguration);
     const error = message => toast.error(message, toasterConfiguration);
+    const info = message => toast.info(message, toasterConfiguration);
 
     const handleSubmit = useCallback(async event => {
         event.preventDefault();
+        const infoId = info('Please wait ...')
 
         const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            },
+            ...API_OPTIONS,
             body: JSON.stringify({ name, email, password, passwordConfirm, role })
         }
 
-        const raw = await fetch(`http://localhost:5000/api/v1/auth/signup`, options)
-
+        const raw = await fetch(`${API_URL}/api/v1/auth/signup`, options)
         const parsed = await raw.json();
 
-        if (!parsed.success)
+        if (!parsed.success) {
+            toast.dismiss(infoId)
             return error(parsed.msg)
+        }
 
+        context.handleSetToken(parsed.token)
+        toast.dismiss(infoId)
         success('Successfully registered')
     })
 
