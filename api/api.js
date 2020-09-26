@@ -5,4 +5,11 @@ export const API_OPTIONS = {
     },
 }
 
+export const API_OPTIONS_PUT = {
+    method: 'PUT',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+}
+
 export default 'http://localhost:5000';

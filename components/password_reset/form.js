@@ -28,6 +28,7 @@ const PasswordResetForm = () => {
             return error(parsed.msg)
         }
 
+        setEmail('');
         success(parsed.data)
     })
 

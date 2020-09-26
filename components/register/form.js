@@ -35,6 +35,10 @@ const RegisterForm = () => {
         event.preventDefault();
         const infoId = info('Please wait ...')
 
+        if (password.length < 8) {
+            return error('Passwords should be at least 8 characters in length')
+        }
+
         const options = {
             ...API_OPTIONS,
             body: JSON.stringify({ name, email, password, passwordConfirm, role })
@@ -48,6 +52,8 @@ const RegisterForm = () => {
             return error(parsed.msg)
         }
 
+        setName(''); setEmail(''); setPassword('');
+        setPasswordConfirm(''); setRole('');
         AuthContext.handleSetUser(parsed)
         router.push('/')
     })

@@ -43,6 +43,7 @@ const LoginForm = () => {
             return error(parsed.msg)
         }
 
+        setEmail(''); setPassword('');
         AuthContext.handleSetUser(parsed)
         router.push('/')
     })
