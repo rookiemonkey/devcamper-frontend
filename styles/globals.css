@@ -17,3 +17,7 @@ body {
 .btn-primary {
     background-color: var(--primary) !important;
 }
+
+.btn-primary {
+	border-color: var(--primary) !important;
+}
