@@ -19,7 +19,7 @@ function Confirm() {
     useEffect(() => {
         async function confirm() {
             const { token } = router.query
-            console.log(token)
+
             if (!token) {
                 setIsError('Something went wrong. You token is invalid')
                 return error('Invalid Token')

@@ -1,149 +1,218 @@
+import styles from '../../styles/forms.module.css';
+import { useState, useCallback } from 'react';
+import Select from 'react-select'
+
 const AddBootcampForm = () => {
+    const [name, setName] = useState('');
+    const [address, setAddress] = useState('');
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
+    const [website, setWebsite] = useState('');
+    const [description, setDescription] = useState('');
+    const [careers, setCareers] = useState([]);
+    const [offers, setOffer] = useState({
+        housing: false,
+        jobAssistance: false,
+        jobGuarantee: false,
+        acceptGi: false
+    })
+
+    const handleChange = useCallback(({ target }) => {
+        const { name, value } = target;
+
+        switch (name) {
+            case 'name': setName(value); break;
+            case 'address': setAddress(value); break;
+            case 'phone': setPhone(value); break;
+            case 'email': setEmail(value); break;
+            case 'website': setWebsite(value); break;
+            case 'description': setDescription(value); break;
+            default: null;
+        }
+    })
+
+    const handleChangeCheckBox = useCallback(({ target }) => {
+        setOffer({ ...offers, [target.name]: !offers[target.name] });
+    })
+
+    const handleChangeSelect = useCallback(event => {
+        setCareers([...event.map(input => input.value)])
+    })
+
+    const handleSubmit = useCallback(event => {
+        event.preventDefault()
+        alert('submitted')
+    })
+
+    const careerOptions = [
+        { value: 'Web Development', label: 'Web Development' },
+        { value: 'Mobile Development', label: 'Mobile Development' },
+        { value: 'UI/UX', label: 'UI/UX' },
+        { value: 'Data Science', label: 'Data Science' },
+        { value: 'Business', label: 'Business' },
+        { value: 'Other', label: 'Other' }
+    ]
 
     return (
-        <section class="container mt-5">
-            <h1 class="mb-2">Add Bootcamp</h1>
+        <section className={`container mt-5 ${styles.custom_mt}`}>
+            <h1 className="mb-2">Add Bootcamp</h1>
             <p>
                 Important: You must be affiliated with a bootcamp to add to DevCamper
 			</p>
-            <form action="manage-bootcamp.html">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="card bg-white py-2 px-4">
-                            <div class="card-body">
+
+            <form method="POST" onSubmit={handleSubmit}>
+                <div className="row">
+                    <div className="col-md-6">
+                        <div className="card bg-white py-2 px-4">
+                            <div className="card-body">
                                 <h3>Location & Contact</h3>
-                                <p class="text-muted">
+                                <p className="text-muted">
                                     If multiple locations, use the main or largest
 								</p>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label>Name</label>
                                     <input
                                         type="text"
                                         name="name"
-                                        class="form-control"
+                                        className="form-control"
                                         placeholder="Bootcamp Name"
+                                        onChange={handleChange}
+                                        value={name}
                                         required
                                     />
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label>Address</label>
                                     <input
                                         type="text"
                                         name="address"
-                                        class="form-control"
+                                        className="form-control"
                                         placeholder="Full Address"
+                                        onChange={handleChange}
+                                        value={address}
                                         required
                                     />
-                                    <small class="form-text text-muted"
+                                    <small className="form-text text-muted"
                                     >Street, city, state, etc</small
                                     >
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label>Phone Number</label>
                                     <input
                                         type="text"
                                         name="phone"
-                                        class="form-control"
+                                        className="form-control"
                                         placeholder="Phone"
+                                        onChange={handleChange}
+                                        value={phone}
                                     />
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label>Email</label>
                                     <input
                                         type="text"
                                         name="email"
-                                        class="form-control"
+                                        className="form-control"
                                         placeholder="Contact Email"
+                                        onChange={handleChange}
+                                        value={email}
                                     />
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label>Website</label>
                                     <input
                                         type="text"
                                         name="website"
-                                        class="form-control"
+                                        className="form-control"
                                         placeholder="Website URL"
+                                        onChange={handleChange}
+                                        value={website}
                                     />
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="card bg-white py-2 px-4">
-                            <div class="card-body">
+                    <div className="col-md-6">
+                        <div className="card bg-white py-2 px-4">
+                            <div className="card-body">
                                 <h3>Other Info</h3>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label>Description</label>
                                     <textarea
                                         name="description"
                                         rows="5"
-                                        class="form-control"
+                                        className="form-control"
                                         placeholder="Description (What you offer, etc)"
-                                        maxlength="500"
+                                        maxLength="500"
+                                        onChange={handleChange}
+                                        value={description}
                                     ></textarea>
-                                    <small class="form-text text-muted"
+                                    <small className="form-text text-muted"
                                     >No more than 500 characters</small
                                     >
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <label>Careers</label>
-                                    <select name="careers" class="custom-select" multiple>
-                                        <option selected>Select all that apply</option>
-                                        <option value="Web Development">Web Development</option>
-                                        <option value="Mobile Development"
-                                        >Mobile Development</option
-                                        >
-                                        <option value="UI/UX">UI/UX</option>
-                                        <option value="Data Science">Data Science</option>
-                                        <option value="Business">Business</option>
-                                        <option value="Other">Other</option>
-                                    </select>
+                                    <Select
+                                        name="careers"
+                                        onChange={handleChangeSelect}
+                                        isMulti={true}
+                                        options={careerOptions}
+                                    />
                                 </div>
-                                <div class="form-check">
+                                <div className="form-check">
                                     <input
-                                        class="form-check-input"
+                                        className="form-check-input"
                                         type="checkbox"
                                         name="housing"
                                         id="housing"
+                                        onChange={handleChangeCheckBox}
+                                        checked={offers['housing']}
                                     />
-                                    <label class="form-check-label" for="housing">
+                                    <label className="form-check-label" htmlFor="housing">
                                         Housing
 									</label>
                                 </div>
-                                <div class="form-check">
+                                <div className="form-check">
                                     <input
-                                        class="form-check-input"
+                                        className="form-check-input"
                                         type="checkbox"
                                         name="jobAssistance"
                                         id="jobAssistance"
+                                        onChange={handleChangeCheckBox}
+                                        checked={offers['jobAssistance']}
                                     />
-                                    <label class="form-check-label" for="jobAssistance">
+                                    <label className="form-check-label" htmlFor="jobAssistance">
                                         Job Assistance
 									</label>
                                 </div>
-                                <div class="form-check">
+                                <div className="form-check">
                                     <input
-                                        class="form-check-input"
+                                        className="form-check-input"
                                         type="checkbox"
                                         name="jobGuarantee"
                                         id="jobGuarantee"
+                                        onChange={handleChangeCheckBox}
+                                        checked={offers['jobGuarantee']}
                                     />
-                                    <label class="form-check-label" for="jobGuarantee">
+                                    <label className="form-check-label" htmlFor="jobGuarantee">
                                         Job Guarantee
 									</label>
                                 </div>
-                                <div class="form-check">
+                                <div className="form-check">
                                     <input
-                                        class="form-check-input"
+                                        className="form-check-input"
                                         type="checkbox"
                                         name="acceptGi"
                                         id="acceptGi"
+                                        onChange={handleChangeCheckBox}
+                                        checked={offers['acceptGi']}
                                     />
-                                    <label class="form-check-label" for="acceptGi">
+                                    <label className="form-check-label" htmlFor="acceptGi">
                                         Accepts GI Bill
 									</label>
                                 </div>
-                                <p class="text-muted my-4">
+                                <p className="text-muted my-4">
                                     *After you add the bootcamp, you can add the specific courses
                                     offered
 								</p>
@@ -151,13 +220,13 @@ const AddBootcampForm = () => {
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                     <input
                         type="submit"
                         value="Submit Bootcamp"
-                        class="btn btn-success btn-block my-4"
+                        className="btn btn-success btn-block my-4"
                     />
-                    <a href="manage-bootcamp.html" class="btn btn-danger btn-block mb-4"
+                    <a href="manage-bootcamp.html" className="btn btn-danger btn-block mb-4"
                     >Cancel</a
                     >
                 </div>

@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Navigation from '../../components/Navigation';
-import AddBootcampForm from '../../components/bootcamp/addForm';
+import AddBootcampForm from '../../components/bootcamp/FormAdd';
 
 const AddBootcamp = () => {
 
