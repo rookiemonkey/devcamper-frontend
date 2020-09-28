@@ -3,6 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "../styles/globals.css";
 import { useEffect } from "react";
 import { AuthProvider } from '../context/auth';
+import { ToasterProvider } from '../context/toaster';
 
 const MyApp = ({ Component, pageProps }) => {
 
@@ -16,7 +17,9 @@ const MyApp = ({ Component, pageProps }) => {
 
   return (
     <AuthProvider>
-      <Component {...pageProps} />
+      <ToasterProvider>
+        <Component {...pageProps} />
+      </ToasterProvider>
     </AuthProvider>
   )
 }

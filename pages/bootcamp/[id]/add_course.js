@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import Navigation from '../../components/Navigation';
-import AddCourseForm from '../../components/course/FormAddCourse';
+import Navigation from '../../../components/Navigation';
+import AddCourseForm from '../../../components/course/FormAddCourse';
 
 const AddCourse = () => {
 

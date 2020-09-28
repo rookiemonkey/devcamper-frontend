@@ -1,13 +1,14 @@
 import styles from '../../styles/forms.module.css';
 import { useState, useCallback } from 'react';
 import Select from 'react-select'
-import { ToastContainer, toast } from 'react-toastify';
-import useAuth from '../../context/auth'
+import { ToastContainer } from 'react-toastify';
+import useAuth from '../../context/auth';
+import useToaster from '../../context/toaster';
 import API_URL, { API_OPTIONS } from '../../api/api';
-import toasterConfiguration from '../_toaster';
 
 const AddBootcampForm = () => {
     const AuthContext = useAuth();
+    const ToasterContext = useToaster();
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [phone, setPhone] = useState('');
@@ -22,10 +23,6 @@ const AddBootcampForm = () => {
         jobGuarantee: false,
         acceptGi: false
     })
-
-    const success = message => toast.success(message, toasterConfiguration);
-    const error = message => toast.error(message, toasterConfiguration);
-    const info = message => toast.info(message, toasterConfiguration);
 
     const handleChange = useCallback(({ target }) => {
         const { name, value } = target;
@@ -52,7 +49,7 @@ const AddBootcampForm = () => {
 
     const handleSubmit = useCallback(async event => {
         event.preventDefault()
-        const infoId = info('Please wait ...')
+        const infoId = ToasterContext.info('Please wait ...')
 
         API_OPTIONS.headers['Authorization'] = `Bearer ${AuthContext.user.token}`;
 
@@ -67,10 +64,10 @@ const AddBootcampForm = () => {
 
         const raw = await fetch(`${API_URL}/api/v1/bootcamps`, options)
         const parsed = await raw.json();
-        toast.dismiss(infoId)
+        ToasterContext.dismiss(infoId)
 
         if (!parsed.success) {
-            return error(parsed.msg)
+            return ToasterContext.error(parsed.msg)
         }
 
         setCareers([]); setCareersRef([]);
@@ -82,7 +79,7 @@ const AddBootcampForm = () => {
             acceptGi: false
         })
 
-        success('Bootcamp succesfully created!')
+        ToasterContext.success('Bootcamp succesfully created!')
     })
 
     const careerOptions = [

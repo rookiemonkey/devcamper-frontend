@@ -1,16 +1,22 @@
 import styles from '../../styles/forms.module.css';
+import { useRouter } from 'next/router';
 import { useState, useCallback } from 'react';
-import Select from 'react-select'
-import useAuth from '../../context/auth'
+import Select from 'react-select';
+import { ToastContainer } from 'react-toastify';
+import useAuth from '../../context/auth';
+import useToaster from '../../context/toaster';
+import API_URL, { API_OPTIONS } from '../../api/api';
 
 const AddCourseForm = () => {
+    const { query } = useRouter()
     const AuthContext = useAuth();
+    const ToasterContext = useToaster();
     const [title, setTitle] = useState('');
-    const [duration, setDuration] = useState(0);
+    const [weeks, setWeeks] = useState(0);
     const [tuition, setTuition] = useState(0);
     const [description, setDescription] = useState('');
-    const [minimumSkills, setMinimumSkills] = useState('');
-    const [minimumSkillsRef, setMinimumSkillsRef] = useState({});
+    const [minimumSkill, setMinimumSkill] = useState('');
+    const [minimumSkillRef, setMinimumSkillRef] = useState({});
     const [scholarshipAvailable, setScholarshipAvailable] = useState({
         scholarshipAvailable: false,
     })
@@ -20,7 +26,7 @@ const AddCourseForm = () => {
 
         switch (name) {
             case 'title': setTitle(value); break;
-            case 'duration': setDuration(parseInt(value)); break;
+            case 'weeks': setWeeks(parseInt(value)); break;
             case 'tuition': setTuition(parseInt(value)); break;
             case 'description': setDescription(value); break;
             default: null;
@@ -32,13 +38,37 @@ const AddCourseForm = () => {
     })
 
     const handleChangeSelect = useCallback(event => {
-        setMinimumSkills(event.value)
-        setMinimumSkillsRef(event)
+        setMinimumSkill(event.value)
+        setMinimumSkillRef(event)
     })
 
-    const handleSubmit = useCallback(event => {
+    const handleSubmit = useCallback(async event => {
         event.preventDefault();
-        alert('Subitted')
+        const infoId = ToasterContext.info('Please wait ...')
+
+        API_OPTIONS.headers['Authorization'] = `Bearer ${AuthContext.user.token}`;
+
+        const options = {
+            ...API_OPTIONS,
+            body: JSON.stringify({
+                title, weeks, tuition, description,
+                minimumSkill, ...scholarshipAvailable
+            })
+        }
+
+        const raw = await fetch(`${API_URL}/api/v1/bootcamps/${query.id}/courses`, options)
+        const parsed = await raw.json();
+        ToasterContext.dismiss(infoId)
+
+        if (!parsed.success) {
+            return ToasterContext.error(parsed.msg)
+        }
+
+        setTitle(''); setWeeks(0); setTuition(0); setDescription('')
+        setMinimumSkill(''); setMinimumSkillRef({});
+        setScholarshipAvailable({ scholarshipAvailable: false })
+
+        ToasterContext.success('Course succesfully added!')
     })
 
     const minimumSkillsOptions = [
@@ -49,6 +79,9 @@ const AddCourseForm = () => {
 
     return (
         <section className={`container mt-5 ${styles.custom_mt}`}>
+
+            <ToastContainer />
+
             <div className="row">
                 <div className="col-md-8 m-auto">
                     <div className="card bg-white py-2 px-4">
@@ -76,10 +109,10 @@ const AddCourseForm = () => {
                                     <label>Duration</label>
                                     <input
                                         type="number"
-                                        name="duration"
+                                        name="weeks"
                                         placeholder="Duration"
                                         className="form-control"
-                                        value={duration}
+                                        value={weeks}
                                         onChange={handleChange}
                                     />
                                     <small className="form-text text-muted"
@@ -104,7 +137,7 @@ const AddCourseForm = () => {
                                         name="minimumSkill"
                                         onChange={handleChangeSelect}
                                         options={minimumSkillsOptions}
-                                        value={minimumSkillsRef}
+                                        value={minimumSkillRef}
                                     />
                                 </div>
                                 <div className="form-group">
