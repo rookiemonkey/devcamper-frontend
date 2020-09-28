@@ -30,7 +30,7 @@ const Navigation = () => {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item">
-                            <Link href="bootcamps.html">
+                            <Link href="/bootcamps">
                                 <a className="nav-link">
                                     <i className="fas fa-search"></i>
                                     &nbsp; Browse Bootcamps
