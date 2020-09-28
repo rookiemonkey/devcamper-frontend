@@ -1,8 +1,13 @@
 import styles from '../../styles/forms.module.css';
 import { useState, useCallback } from 'react';
 import Select from 'react-select'
+import { ToastContainer, toast } from 'react-toastify';
+import useAuth from '../../context/auth'
+import API_URL, { API_OPTIONS } from '../../api/api';
+import toasterConfiguration from '../_toaster';
 
 const AddBootcampForm = () => {
+    const AuthContext = useAuth();
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [phone, setPhone] = useState('');
@@ -10,12 +15,17 @@ const AddBootcampForm = () => {
     const [website, setWebsite] = useState('');
     const [description, setDescription] = useState('');
     const [careers, setCareers] = useState([]);
+    const [careersRef, setCareersRef] = useState([]);
     const [offers, setOffer] = useState({
         housing: false,
         jobAssistance: false,
         jobGuarantee: false,
         acceptGi: false
     })
+
+    const success = message => toast.success(message, toasterConfiguration);
+    const error = message => toast.error(message, toasterConfiguration);
+    const info = message => toast.info(message, toasterConfiguration);
 
     const handleChange = useCallback(({ target }) => {
         const { name, value } = target;
@@ -37,11 +47,42 @@ const AddBootcampForm = () => {
 
     const handleChangeSelect = useCallback(event => {
         setCareers([...event.map(input => input.value)])
+        setCareersRef([...event])
     })
 
-    const handleSubmit = useCallback(event => {
+    const handleSubmit = useCallback(async event => {
         event.preventDefault()
-        alert('submitted')
+        const infoId = info('Please wait ...')
+
+        API_OPTIONS.headers['Authorization'] = `Bearer ${AuthContext.user.token}`;
+
+        const options = {
+            ...API_OPTIONS,
+            body: JSON.stringify({
+                name, address, phone,
+                email, website, description,
+                careers, ...offers
+            })
+        }
+
+        const raw = await fetch(`${API_URL}/api/v1/bootcamps`, options)
+        const parsed = await raw.json();
+        toast.dismiss(infoId)
+
+        if (!parsed.success) {
+            return error(parsed.msg)
+        }
+
+        setCareers([]); setCareersRef([]);
+        setName(''); setAddress(''); setPhone(''); setEmail('');
+        setWebsite(''); setDescription(''); setOffer({
+            housing: false,
+            jobAssistance: false,
+            jobGuarantee: false,
+            acceptGi: false
+        })
+
+        success('Bootcamp succesfully created!')
     })
 
     const careerOptions = [
@@ -55,6 +96,9 @@ const AddBootcampForm = () => {
 
     return (
         <section className={`container mt-5 ${styles.custom_mt}`}>
+
+            <ToastContainer />
+
             <h1 className="mb-2">Add Bootcamp</h1>
             <p>
                 Important: You must be affiliated with a bootcamp to add to DevCamper
@@ -110,7 +154,7 @@ const AddBootcampForm = () => {
                                 <div className="form-group">
                                     <label>Email</label>
                                     <input
-                                        type="text"
+                                        type="email"
                                         name="email"
                                         className="form-control"
                                         placeholder="Contact Email"
@@ -158,6 +202,7 @@ const AddBootcampForm = () => {
                                         onChange={handleChangeSelect}
                                         isMulti={true}
                                         options={careerOptions}
+                                        value={careersRef}
                                     />
                                 </div>
                                 <div className="form-check">
