@@ -1,18 +1,15 @@
 import styles from '../../styles/forms.module.css';
 import { useRouter } from 'next/router';
 import { useState, useCallback } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import useToaster from '../../context/toaster';
 import API_URL, { API_OPTIONS_PUT } from '../../api/api';
-import toasterConfiguration from '../_toaster';
 
 const PasswordUpdateForm = () => {
     const router = useRouter();
+    const { error, success, info, dismiss } = useToaster();
     const [passwordNew, setPasswordNew] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
-
-    const success = message => toast.success(message, toasterConfiguration);
-    const error = message => toast.error(message, toasterConfiguration);
-    const info = message => toast.info(message, toasterConfiguration);
 
     const handleChange = useCallback(event => {
         const { name, value } = event.target;
@@ -41,7 +38,7 @@ const PasswordUpdateForm = () => {
 
         const raw = await fetch(`${API_URL}/api/v1/auth/resetPassword/${token}`, options)
         const parsed = await raw.json();
-        toast.dismiss(infoId)
+        dismiss(infoId)
 
         if (!parsed.success) {
             return error(parsed.msg)

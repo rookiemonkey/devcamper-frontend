@@ -7,8 +7,8 @@ import useToaster from '../../context/toaster';
 import API_URL, { API_OPTIONS } from '../../api/api';
 
 const AddBootcampForm = () => {
-    const AuthContext = useAuth();
-    const ToasterContext = useToaster();
+    const { user } = useAuth();
+    const { error, success, info, dismiss } = useToaster();
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [phone, setPhone] = useState('');
@@ -49,9 +49,9 @@ const AddBootcampForm = () => {
 
     const handleSubmit = useCallback(async event => {
         event.preventDefault()
-        const infoId = ToasterContext.info('Please wait ...')
+        const infoId = info('Please wait ...')
 
-        API_OPTIONS.headers['Authorization'] = `Bearer ${AuthContext.user.token}`;
+        API_OPTIONS.headers['Authorization'] = `Bearer ${user.token}`;
 
         const options = {
             ...API_OPTIONS,
@@ -64,10 +64,10 @@ const AddBootcampForm = () => {
 
         const raw = await fetch(`${API_URL}/api/v1/bootcamps`, options)
         const parsed = await raw.json();
-        ToasterContext.dismiss(infoId)
+        dismiss(infoId)
 
         if (!parsed.success) {
-            return ToasterContext.error(parsed.msg)
+            return error(parsed.msg)
         }
 
         setCareers([]); setCareersRef([]);
@@ -79,7 +79,7 @@ const AddBootcampForm = () => {
             acceptGi: false
         })
 
-        ToasterContext.success('Bootcamp succesfully created!')
+        success('Bootcamp succesfully created!')
     })
 
     const careerOptions = [

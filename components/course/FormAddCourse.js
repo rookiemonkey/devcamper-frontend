@@ -9,8 +9,8 @@ import API_URL, { API_OPTIONS } from '../../api/api';
 
 const AddCourseForm = () => {
     const { query } = useRouter()
-    const AuthContext = useAuth();
-    const ToasterContext = useToaster();
+    const { user } = useAuth();
+    const { success, info, error, dismiss } = useToaster();
     const [title, setTitle] = useState('');
     const [weeks, setWeeks] = useState(0);
     const [tuition, setTuition] = useState(0);
@@ -44,9 +44,9 @@ const AddCourseForm = () => {
 
     const handleSubmit = useCallback(async event => {
         event.preventDefault();
-        const infoId = ToasterContext.info('Please wait ...')
+        const infoId = info('Please wait ...')
 
-        API_OPTIONS.headers['Authorization'] = `Bearer ${AuthContext.user.token}`;
+        API_OPTIONS.headers['Authorization'] = `Bearer ${user.token}`;
 
         const options = {
             ...API_OPTIONS,
@@ -58,17 +58,17 @@ const AddCourseForm = () => {
 
         const raw = await fetch(`${API_URL}/api/v1/bootcamps/${query.id}/courses`, options)
         const parsed = await raw.json();
-        ToasterContext.dismiss(infoId)
+        dismiss(infoId)
 
         if (!parsed.success) {
-            return ToasterContext.error(parsed.msg)
+            return error(parsed.msg)
         }
 
         setTitle(''); setWeeks(0); setTuition(0); setDescription('')
         setMinimumSkill(''); setMinimumSkillRef({});
         setScholarshipAvailable({ scholarshipAvailable: false })
 
-        ToasterContext.success('Course succesfully added!')
+        success('Course succesfully added!')
     })
 
     const minimumSkillsOptions = [

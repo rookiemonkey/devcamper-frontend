@@ -1,22 +1,20 @@
 import styles from '../../styles/forms.module.css';
 import { useRouter } from 'next/router';
 import { useState, useCallback } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import useAuth from '../../context/auth';
+import useToaster from '../../context/toaster';
 import API_URL, { API_OPTIONS } from '../../api/api';
-import toasterConfiguration from '../_toaster';
 
 const RegisterForm = () => {
     const router = useRouter();
-    const AuthContext = useAuth();
+    const { error, info, dismiss } = useToaster();
+    const { handleSetUser } = useAuth();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
     const [role, setRole] = useState('');
-
-    const error = message => toast.error(message, toasterConfiguration);
-    const info = message => toast.info(message, toasterConfiguration);
 
     const handleChange = useCallback(event => {
         const { name, value } = event.target;
@@ -46,7 +44,7 @@ const RegisterForm = () => {
 
         const raw = await fetch(`${API_URL}/api/v1/auth/signup`, options)
         const parsed = await raw.json();
-        toast.dismiss(infoId)
+        dismiss(infoId)
 
         if (!parsed.success) {
             return error(parsed.msg)
@@ -54,7 +52,7 @@ const RegisterForm = () => {
 
         setName(''); setEmail(''); setPassword('');
         setPasswordConfirm(''); setRole('');
-        AuthContext.handleSetUser(parsed)
+        handleSetUser(parsed)
         router.push('/')
     })
 

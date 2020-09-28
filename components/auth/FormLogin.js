@@ -2,19 +2,17 @@ import styles from '../../styles/forms.module.css';
 import Link from 'next/link'
 import { useRouter } from 'next/router';
 import { useState, useCallback } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import useAuth from '../../context/auth';
+import useToaster from '../../context/toaster';
 import API_URL, { API_OPTIONS } from '../../api/api';
-import toasterConfiguration from '../_toaster';
 
 const LoginForm = () => {
-    const router = useRouter()
-    const AuthContext = useAuth();
+    const router = useRouter();
+    const { info, error, dismiss } = useToaster();
+    const { handleSetUser } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-    const error = message => toast.error(message, toasterConfiguration);
-    const info = message => toast.info(message, toasterConfiguration);
 
     const handleChange = useCallback(event => {
         const { name, value } = event.target;
@@ -37,14 +35,14 @@ const LoginForm = () => {
 
         const raw = await fetch(`${API_URL}/api/v1/auth/signin`, options)
         const parsed = await raw.json();
-        toast.dismiss(infoId)
+        dismiss(infoId)
 
         if (!parsed.success) {
             return error(parsed.msg)
         }
 
         setEmail(''); setPassword('');
-        AuthContext.handleSetUser(parsed)
+        handleSetUser(parsed)
         router.push('/')
     })
 

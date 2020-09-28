@@ -1,16 +1,13 @@
 import styles from '../../styles/forms.module.css';
 import Link from 'next/link'
 import { useState, useCallback } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
+import useToaster from '../../context/toaster';
 import API_URL, { API_OPTIONS } from '../../api/api';
-import toasterConfiguration from '../_toaster';
 
 const PasswordResetForm = () => {
+    const { error, info, success, dismiss } = useToaster();
     const [email, setEmail] = useState('');
-
-    const success = message => toast.success(message, toasterConfiguration);
-    const error = message => toast.error(message, toasterConfiguration);
-    const info = message => toast.info(message, toasterConfiguration);
 
     const handleChange = useCallback(event => setEmail(event.target.value))
 
@@ -22,7 +19,7 @@ const PasswordResetForm = () => {
 
         const raw = await fetch(`${API_URL}/api/v1/auth/forgotPassword`, options)
         const parsed = await raw.json();
-        toast.dismiss(infoId)
+        dismiss(infoId)
 
         if (!parsed.success) {
             return error(parsed.msg)
