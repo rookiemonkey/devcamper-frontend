@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import Navigation from '../components/Navigation';
-import RegisterForm from '../components/register/form';
+import Navigation from '../../components/Navigation';
+import RegisterForm from '../../components/auth/FormRegister';
 
 function Register() {
     return (

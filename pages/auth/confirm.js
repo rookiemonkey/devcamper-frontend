@@ -1,11 +1,11 @@
+import styles from '../../styles/confirm.module.css'
 import Head from 'next/head'
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-import Navigation from '../components/Navigation';
-import styles from '../styles/confirm.module.css'
-import toasterConfiguration from '../components/_toaster';
-import API_URL, { API_OPTIONS } from '../api/api';
+import Navigation from '../../components/Navigation';
+import toasterConfiguration from '../../components/_toaster';
+import API_URL, { API_OPTIONS } from '../../api/api';
 
 function Confirm() {
     const router = useRouter()

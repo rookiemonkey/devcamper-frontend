@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import Navigation from '../components/Navigation';
-import PasswordResetForm from '../components/password_reset/form';
+import Navigation from '../../components/Navigation';
+import PasswordResetForm from '../../components/auth/FormPasswordReset';
 
 function PasswordReset() {
     return (

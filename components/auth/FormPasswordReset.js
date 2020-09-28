@@ -41,7 +41,7 @@ const PasswordResetForm = () => {
 
                             <ToastContainer />
 
-                            <Link href="/login"><a>Back to login</a></Link>
+                            <Link href="/auth/login"><a>Back to login</a></Link>
                             <h1 className="mb-2">Reset Password</h1>
                             <p>	Use this form to reset your password using the registered email address.</p>
                             <form onSubmit={handleSubmit} method="POST">

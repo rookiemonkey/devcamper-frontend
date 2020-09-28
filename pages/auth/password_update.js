@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import Navigation from '../components/Navigation';
-import PasswordUpdateForm from '../components/password_update/form';
+import Navigation from '../../components/Navigation';
+import PasswordUpdateForm from '../../components/auth/FormPasswordUpdate';
 
 function PasswordUpdate() {
     return (

@@ -58,7 +58,7 @@ const Navigation = () => {
                                 </React.Fragment>
                                 : <React.Fragment>
                                     <li className="nav-item">
-                                        <Link href="/login">
+                                        <Link href="/auth/login">
                                             <a className="nav-link">
                                                 <i className="fas fa-sign-in-alt"></i>
                                                 &nbsp; Login
@@ -66,7 +66,7 @@ const Navigation = () => {
                                         </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link href="/register">
+                                        <Link href="/auth/register">
                                             <a className="nav-link">
                                                 <i className="fas fa-user-plus"></i>
                                                 &nbsp; Register
