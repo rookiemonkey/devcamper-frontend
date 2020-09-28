@@ -72,9 +72,9 @@ const AddCourseForm = () => {
     })
 
     const minimumSkillsOptions = [
-        { value: 'beginner', label: 'Beginner' },
-        { value: 'intermediate', label: 'Intermediate' },
-        { value: 'advanced', label: 'Advanced' },
+        { value: 'Beginner', label: 'Beginner' },
+        { value: 'Intermediate', label: 'Intermediate' },
+        { value: 'Advanced', label: 'Advanced' },
     ]
 
     return (
