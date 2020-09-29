@@ -12,4 +12,11 @@ export const API_OPTIONS_PUT = {
     },
 }
 
+export const API_OPTIONS_DELETE = {
+    method: 'PUT',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+}
+
 export default 'http://localhost:5000';

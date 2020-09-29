@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import useAuth from '../context/auth'
-
+import Cookies from 'js-cookie'
 
 const Navigation = () => {
     const router = useRouter();
@@ -10,6 +10,7 @@ const Navigation = () => {
 
     const handleLogout = useCallback(() => {
         handleSetUser(null)
+        Cookies.remove('token')
         router.push('/')
     })
 
@@ -86,7 +87,7 @@ const Navigation = () => {
 
                                             <div className="dropdown-divider"></div>
 
-                                            <Link href="#">
+                                            <Link href='/'>
                                                 <a className="dropdown-item" onClick={handleLogout}>
                                                     Logout
                                                 </a>

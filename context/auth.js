@@ -7,8 +7,10 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
 
     useEffect(() => {
-        const cookieUser = Cookies.get('token')
-        cookieUser ? setUser(JSON.parse(cookieUser)) : null
+        if (!user) {
+            const cookieUser = Cookies.get('token')
+            cookieUser ? setUser(JSON.parse(cookieUser)) : null
+        }
     }, [])
 
     const handleSetUser = useCallback(user => {
