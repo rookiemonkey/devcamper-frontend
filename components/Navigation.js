@@ -6,10 +6,10 @@ import useAuth from '../context/auth'
 
 const Navigation = () => {
     const router = useRouter();
-    const AuthContext = useAuth();
+    const { user, handleSetUser } = useAuth();
 
     const handleLogout = useCallback(() => {
-        AuthContext.handleSetUser(null)
+        handleSetUser(null)
         router.push('/')
     })
 
@@ -39,21 +39,59 @@ const Navigation = () => {
                         </li>
 
                         {
-                            AuthContext.user
+                            user && user.success
                                 ? <React.Fragment>
-                                    <li>
-                                        <Link href="#">
-                                            <a className="nav-link" onClick={handleLogout}>
-                                                Logout
-                                            </a>
-                                        </Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link href="#">
-                                            <a className="nav-link">
-                                                Logged in
-                                            </a>
-                                        </Link>
+                                    <li className="nav-item dropdown">
+                                        <a
+                                            className="nav-link dropdown-toggle"
+                                            href="#"
+                                            id="navbarDropdown"
+                                            role="button"
+                                            data-toggle="dropdown"
+                                        >
+                                            <i className="fas fa-user"></i>
+                                            &nbsp;  Account
+							            </a>
+                                        <div className="dropdown-menu">
+
+                                            <Link href="#">
+                                                <a className="dropdown-item">
+                                                    Logged in: {user.currentUser.name}
+                                                </a>
+                                            </Link>
+
+                                            <Link
+                                                href={`/user/${user.currentUser._id}/manage/bootcamps`}
+                                            >
+                                                <a className="dropdown-item">
+                                                    Manage Bootcamp
+                                                </a>
+                                            </Link>
+
+                                            <Link
+                                                href={`/user/${user.currentUser._id}/manage/reviews`}
+                                            >
+                                                <a className="dropdown-item">
+                                                    Manage Reviews
+                                                </a>
+                                            </Link>
+
+                                            <Link
+                                                href={`/user/${user.currentUser._id}/manage/account`}
+                                            >
+                                                <a className="dropdown-item">
+                                                    Manage Account
+                                                </a>
+                                            </Link>
+
+                                            <div className="dropdown-divider"></div>
+
+                                            <Link href="#">
+                                                <a className="dropdown-item" onClick={handleLogout}>
+                                                    Logout
+                                                </a>
+                                            </Link>
+                                        </div>
                                     </li>
                                 </React.Fragment>
                                 : <React.Fragment>

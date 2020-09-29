@@ -6,7 +6,7 @@ function PasswordUpdate() {
     return (
         <main>
             <Head>
-                <title>DevCamper - Login</title>
+                <title>DevCamper - Password Update</title>
             </Head>
 
             <Navigation />
