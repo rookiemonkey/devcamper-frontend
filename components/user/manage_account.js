@@ -86,8 +86,13 @@ const ManageAccount = () => {
                                     />
                                 </div>
 
-                                <small className="form-text text-muted"
-                                >*Changing your email will reset your role to publisher since you need to confirm your email again. Upon confirmation, Please request to be an admin again.</small> <br />
+                                <small className="form-text text-muted">
+                                    *Only admins can change their account informations
+                                </small>
+
+                                <small className="form-text text-muted">
+                                    *Changing your email will reset your role to publisher since you need to confirm your email again. Upon confirmation, Please request to be an admin again.
+                                </small> <br />
 
                                 <div className="form-group">
                                     <div className="row">
