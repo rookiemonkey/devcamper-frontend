@@ -1,47 +1,22 @@
 import styles from '../../styles/confirm.module.css'
 import Head from 'next/head'
-import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
 import Navigation from '../../components/Navigation';
-import toasterConfiguration from '../../components/_toaster';
 import API_URL, { API_OPTIONS } from '../../api/api';
 
-function Confirm() {
-    const router = useRouter()
+const Confirm = props => {
+    const { response } = props;
     const [isConfirmed, setIsConfirmed] = useState(false)
     const [isError, setIsError] = useState('');
 
-    const info = message => toast.info(message, toasterConfiguration);
-    const success = message => toast.success(message, toasterConfiguration);
-    const error = message => toast.error(message, toasterConfiguration);
-
     useEffect(() => {
-        async function confirm() {
-            const { token } = router.query
-
-            if (!token) {
-                setIsError('Something went wrong. You token is invalid')
-                return error('Invalid Token')
-            }
-
-            const infoId = info('Please wait ...')
-            const options = { ...API_OPTIONS, body: JSON.stringify({ token }) }
-
-            const raw = await fetch(`${API_URL}/api/v1/auth/confirm`, options)
-            const parsed = await raw.json();
-            toast.dismiss(infoId)
-
-            if (!parsed.success) {
-                setIsError('Something went wrong. You token is invalid')
-                return error('Invalid Token')
-            }
-
+        if (response.success) {
             setIsConfirmed(true)
-            success('Account has been confirmed. Happy Coding!')
         }
 
-        confirm()
+        else {
+            setIsError(response.msg)
+        }
     }, [])
 
     return (
@@ -58,8 +33,6 @@ function Confirm() {
                         <div className="col-md-6 m-auto">
                             <div className="card bg-white p-4 mb-4">
                                 <div className="card-body">
-
-                                    <ToastContainer />
 
                                     <h1 className="mb-5 text-center">Confirm Account</h1>
 
@@ -87,5 +60,19 @@ function Confirm() {
         </main>
     )
 }
+
+export async function getServerSideProps(context) {
+    const { token } = context.query;
+
+    const options = { ...API_OPTIONS, body: JSON.stringify({ token }) }
+
+    const raw = await fetch(`${API_URL}/api/v1/auth/confirm`, options)
+    const parsed = await raw.json();
+
+    return {
+        props: { response: parsed }
+    }
+}
+
 
 export default Confirm;
