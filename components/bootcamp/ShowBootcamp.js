@@ -40,11 +40,11 @@ const ShowBootcamp = props => {
                                                 <b>Cost:</b> ${formatPrice(course.tuition)}
                                             </li>
                                             <li className="list-group-item">
-                                                <i class="far fa-hand-paper text-info"></i> &nbsp;
+                                                <i className="far fa-hand-paper text-info"></i> &nbsp;
                                                 <b>Skill Required:</b> {course.minimumSkill}
                                             </li>
                                             <li className="list-group-item">
-                                                <i class="fas fa-user-graduate text-primary"></i> &nbsp;
+                                                <i className="fas fa-user-graduate text-primary"></i> &nbsp;
                                                 <b>Scholarship Available:</b> &nbsp;
                                                 {
                                                     course.scholarshipAvailable
@@ -64,7 +64,10 @@ const ShowBootcamp = props => {
 
                     <div className="col-md-4">
 
-                        <img src="img/image_1.jpg" className="img-thumbnail" alt={name} />
+                        <img
+                            src={`http://localhost:5000/uploads/${photo}`} className="img-thumbnail"
+                            alt={name}
+                        />
 
                         <h1 className="text-center my-4">
                             <span className="badge badge-secondary badge-success rounded-circle p-3">

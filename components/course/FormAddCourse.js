@@ -1,5 +1,6 @@
 import styles from '../../styles/forms.module.css';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { useState, useCallback } from 'react';
 import Select from 'react-select';
 import { ToastContainer } from 'react-toastify';
@@ -86,11 +87,12 @@ const AddCourseForm = () => {
                 <div className="col-md-8 m-auto">
                     <div className="card bg-white py-2 px-4">
                         <div className="card-body">
-                            <a
-                                href="manage-courses.html"
-                                className="btn btn-link text-secondary my-3"
-                            ><i className="fas fa-chevron-left"></i> Manage Courses</a
-                            >
+                            <Link href={`/user/${user.currentUser._id}/manage/courses`}>
+                                <a className="btn btn-link text-secondary my-3">
+                                    <i className="fas fa-chevron-left"></i>
+                                    &nbsp; Manage Courses
+                                </a>
+                            </Link>
                             <h1 className="mb-2">DevWorks Bootcamp</h1>
                             <h3 className="text-primary mb-4">Add Course</h3>
                             <form onSubmit={handleSubmit} method="POST">

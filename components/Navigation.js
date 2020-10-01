@@ -61,6 +61,12 @@ const Navigation = () => {
                                                 </a>
                                             </Link>
 
+                                            <Link href="#">
+                                                <a className="dropdown-item">
+                                                    Role: {user.currentUser.role}
+                                                </a>
+                                            </Link>
+
                                             <Link
                                                 href={`/user/${user.currentUser._id}/manage/bootcamps`}
                                             >

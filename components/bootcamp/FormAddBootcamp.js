@@ -255,9 +255,11 @@ const AddBootcampForm = () => {
 									</label>
                                 </div>
                                 <p className="text-muted my-4">
-                                    *After you add the bootcamp, you can add the specific courses
-                                    offered
+                                    * After you add the bootcamp, you can add the specific courses offered
 								</p>
+                                <p className="text-muted my-4">
+                                    * Publishers can only add one bootcamp
+                                </p>
                             </div>
                         </div>
                     </div>
