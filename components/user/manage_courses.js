@@ -87,24 +87,21 @@ const ManageCourses = props => {
                                                 <tbody>
                                                     {
                                                         isLoaded && courses.data.length > 0
-                                                            ? courses.data.map((course, ind) => {
-                                                                console.log('course', course)
-                                                                return (
-                                                                    <tr>
-                                                                        <td>{course.title}</td>
-                                                                        <td>
-                                                                            <Link href="#">
-                                                                                <a className="btn btn-secondary" >
-                                                                                    <i className="fas fa-pencil-alt"></i>
-                                                                                </a>
-                                                                            </Link>
-                                                                            <button className="btn btn-danger">
-                                                                                <i className="fas fa-times"></i>
-                                                                            </button>
-                                                                        </td>
-                                                                    </tr>
-                                                                )
-                                                            })
+                                                            ? courses.data.map((course, ind) => (
+                                                                <tr key={ind}>
+                                                                    <td>{course.title}</td>
+                                                                    <td>
+                                                                        <Link href={`/bootcamp/${bootcamp._id}/${course._id}/edit`}>
+                                                                            <a className="btn btn-secondary" >
+                                                                                <i className="fas fa-pencil-alt"></i>
+                                                                            </a>
+                                                                        </Link>
+                                                                        <button className="btn btn-danger">
+                                                                            <i className="fas fa-times"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            ))
                                                             : null
                                                     }
                                                 </tbody>
