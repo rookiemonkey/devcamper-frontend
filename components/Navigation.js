@@ -9,9 +9,9 @@ const Navigation = () => {
     const { user, handleSetUser } = useAuth();
 
     const handleLogout = useCallback(() => {
-        handleSetUser(null)
         Cookies.remove('token')
         router.push('/')
+        handleSetUser(null)
     })
 
     return (

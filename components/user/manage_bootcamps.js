@@ -2,6 +2,7 @@ import styles from '../../styles/forms.module.css';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import useAuth from '../../context/auth';
+import ManageBootcampsNone from './manage_bootcamps_none';
 
 const ManageBootcamps = props => {
     const { user } = useAuth();
@@ -22,7 +23,7 @@ const ManageBootcamps = props => {
                             <h1 className="mb-4">Manage Bootcamp/s</h1>
 
                             {
-                                bootcamps
+                                bootcamps && bootcamps.data.length > 0
                                     ? bootcamps.data.map((bootcamp, ind) => (
                                         <div key={ind} >
                                             <div className="card mb-3">
@@ -99,7 +100,7 @@ const ManageBootcamps = props => {
                                         </div>
                                     ))
 
-                                    : null
+                                    : <ManageBootcampsNone />
                             }
 
                             <p className="text-muted mt-5">

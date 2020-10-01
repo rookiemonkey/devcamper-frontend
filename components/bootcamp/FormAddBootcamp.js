@@ -1,4 +1,5 @@
 import styles from '../../styles/forms.module.css';
+import Link from 'next/link';
 import { useState, useCallback } from 'react';
 import Select from 'react-select'
 import { ToastContainer } from 'react-toastify';
@@ -270,9 +271,10 @@ const AddBootcampForm = () => {
                         value="Submit Bootcamp"
                         className="btn btn-success btn-block my-4"
                     />
-                    <a href="manage-bootcamp.html" className="btn btn-danger btn-block mb-4"
-                    >Cancel</a
-                    >
+                    <Link href={`/user/${user.currentUser._id}/manage/bootcamps`}>
+                        <a className="btn btn-danger btn-block mb-4"
+                        >Cancel</a>
+                    </Link>
                 </div>
             </form>
         </section>

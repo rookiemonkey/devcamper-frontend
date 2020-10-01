@@ -13,7 +13,7 @@ export const API_OPTIONS_PUT = {
 }
 
 export const API_OPTIONS_DELETE = {
-    method: 'PUT',
+    method: 'DELETE',
     headers: {
         'Content-Type': 'application/json'
     },

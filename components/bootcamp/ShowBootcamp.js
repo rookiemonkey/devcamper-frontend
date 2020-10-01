@@ -24,8 +24,8 @@ const ShowBootcamp = props => {
                         </p>
 
                         {
-                            courses.map(course => (
-                                <div className="card mb-3">
+                            courses.map((course, ind) => (
+                                <div className="card mb-3" key={ind}>
                                     <h5 className="card-header bg-primary text-white">
                                         {course.title}
                                     </h5>
