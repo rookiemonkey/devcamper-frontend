@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Navigation from '../../../../../components/Navigation';
-import EditReviewBootcampForm from '../../../../../components/bootcamp/FormEditReviewBootcamp';
+import EditReviewBootcampForm from '../../../../../components/review/FormEditReviewBootcamp';
 import API_URL from '../../../../../api/api';
 
 const ReviewBootcamp = props => {
