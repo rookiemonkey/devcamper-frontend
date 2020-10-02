@@ -148,13 +148,13 @@ const ShowBootcamp = props => {
                                 </span> &nbsp; Rating
                         </h1>
 
-                            <Link href={`/bootcamp/${_id}/reviews`}>
+                            <Link href={`/bootcamp/${_id}/reviews/`}>
                                 <a className="btn btn-dark btn-block my-3">
                                     <i className="fas fa-comments"></i> &nbsp; Read Reviews
                             </a>
                             </Link>
 
-                            <Link href={`/bootcamp/${_id}/review`}>
+                            <Link href={`/bootcamp/${_id}/reviews/add`}>
                                 <a className="btn btn-light btn-block my-3">
                                     <i className="fas fa-pencil-alt"></i> &nbsp; Write a Review
                             </a>

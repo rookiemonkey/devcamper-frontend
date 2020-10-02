@@ -1,7 +1,7 @@
 import Head from 'next/head'
-import Navigation from '../../../components/Navigation';
-import ReviewBootcampForm from '../../../components/bootcamp/FormAddReviewBootcamp';
-import API_URL from '../../../api/api';
+import Navigation from '../../../../components/Navigation';
+import ReviewBootcampForm from '../../../../components/bootcamp/FormAddReviewBootcamp';
+import API_URL from '../../../../api/api';
 
 const ReviewBootcamp = props => {
     const { data } = props.bootcamp;

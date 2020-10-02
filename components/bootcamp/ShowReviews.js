@@ -70,7 +70,7 @@ const Reviews = props => {
     						&nbsp; Rating
     					</h1>
 
-                        <Link href={`/bootcamp/${bootcampData._id}/review`}>
+                        <Link href={`/bootcamp/${bootcampData._id}/reviews/add`}>
                             <a className="btn btn-primary btn-block my-3">
                                 <i className="fas fa-pencil-alt"></i>
                             &nbsp; Review This Bootcamp

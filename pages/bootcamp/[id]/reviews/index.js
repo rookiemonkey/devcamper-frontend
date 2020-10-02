@@ -1,7 +1,7 @@
 import Head from 'next/head'
-import Navigation from '../../../components/Navigation';
-import Reviews from '../../../components/bootcamp/ShowReviews';
-import API_URL from '../../../api/api';
+import Navigation from '../../../../components/Navigation';
+import Reviews from '../../../../components/bootcamp/ShowReviews';
+import API_URL from '../../../../api/api';
 
 const BootcampReviews = props => {
     const { reviews, bootcamp } = props;
