@@ -7,7 +7,8 @@ import useToaster from '../../context/toaster';
 import useAuth from '../../context/auth';
 import API_URL, { API_OPTIONS } from '../../api/api';
 
-const ReviewBootcampForm = () => {
+const ReviewBootcampForm = props => {
+    const { name } = props.bootcamp;
     const { user } = useAuth();
     const { query } = useRouter();
     const { error, info, success, dismiss } = useToaster();
@@ -66,7 +67,7 @@ const ReviewBootcampForm = () => {
                                 </a>
                             </Link>
 
-                            <h1 className="mb-2">DevWorks Bootcamp</h1>
+                            <h1 className="mb-2">{name}</h1>
 
                             <h3 className="text-primary mb-4">Write a Review</h3>
 

@@ -8,8 +8,8 @@ import useToaster from '../../context/toaster';
 import API_URL, { API_OPTIONS_DELETE } from '../../api/api';
 
 const ManageReviews = props => {
-    const { user, handleSetUser } = useAuth();
-    const { success, info, error, dismiss } = useToaster();
+    const { user } = useAuth();
+    const { success, error } = useToaster();
     const { reviews } = props;
     const [data, setData] = useState([]);
 
@@ -72,8 +72,8 @@ const ManageReviews = props => {
                                                 <td>{review.bootcamp.name}</td>
                                                 <td>{review.rating}</td>
                                                 <td>
-                                                    <Link href="add-review.html">
-                                                        <a className="btn btn-secondary ml-1 mr-1">
+                                                    <Link href={`/bootcamp/${review.bootcamp._id}/reviews/${review._id}/edit`}>
+                                                        <a className="btn btn-secondary ml-1 mr-1 float-right">
                                                             <i className="fas fa-pencil-alt"></i>
                                                         </a>
                                                     </Link>
@@ -83,7 +83,7 @@ const ManageReviews = props => {
                                                             event.preventDefault();
                                                             handleDelete(review._id)
                                                         }}
-                                                        className={styles2.inline}
+                                                        className={`${styles2.inline} float-right`}
                                                         method="POST"
                                                     >
                                                         <button
