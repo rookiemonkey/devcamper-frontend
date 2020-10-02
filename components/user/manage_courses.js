@@ -90,7 +90,7 @@ const ManageCourses = props => {
                                                                         </Link>
                                                                     </h5>
                                                                     <span className="badge badge-dark mb-2">
-                                                                        {bootcamp.location.formattedAddress}
+                                                                        {`${bootcamp.location.city}, ${bootcamp.location.country}`}
                                                                     </span>
                                                                     <p className="card-text">
                                                                         {bootcamp.careers.map(career => `${career}, `)}

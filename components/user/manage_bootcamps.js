@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import useAuth from '../../context/auth';
 import useToaster from '../../context/toaster';
-import API_URL, { API_OPTIONS_DELETE } from '../../api/api';
+import API_URL, { API_OPTIONS_DELETE, API_OPTIONS_PUT } from '../../api/api';
 import ManageBootcampsNone from './manage_bootcamps_none';
 
 const ManageBootcamps = props => {
@@ -12,6 +12,7 @@ const ManageBootcamps = props => {
     const { user } = useAuth();
     const { error, info, dismiss } = useToaster();
     const [bootcamps, setBootcamps] = useState(null);
+    const [upload, setUpload] = useState(null);
 
     useEffect(() => {
         if (props.bootcamps) {
@@ -32,8 +33,35 @@ const ManageBootcamps = props => {
             return error(parsed.msg)
         }
 
-        router.reload();
+        success('Successfully deleted the bootcamp!')
+        setTimeout(() => router.reload(), 2000)
     }, [])
+
+    const handeChangeUpload = useCallback(event => setUpload(event.target.files[0]))
+
+    const handleUpload = useCallback(async bootcamp_id => {
+        const infoId = info('Please wait ...');
+
+        const formData = new FormData()
+        formData.append('file', upload)
+
+        const options = {
+            ...API_OPTIONS_PUT,
+            headers: { "Authorization": `Bearer ${user.token}` },
+            body: formData
+        }
+
+        const raw = await fetch(`${API_URL}/api/v1/bootcamps/${bootcamp_id}/photo`, options);
+        const parsed = await raw.json();
+        dismiss(infoId)
+
+        if (!parsed.success) {
+            return error(parsed.msg)
+        }
+
+        success('Successfully deleted the bootcamp!')
+        setTimeout(() => router.reload(), 2000)
+    })
 
     return (
         <section className={`container mt-5 ${styles.custom_mt}`}>
@@ -69,7 +97,7 @@ const ManageBootcamps = props => {
                                                                 </Link>
                                                             </h5>
                                                             <span className="badge badge-dark mb-2">
-                                                                {bootcamp.location.formattedAddress}
+                                                                {`${bootcamp.location.city}, ${bootcamp.location.country}`}
                                                             </span>
                                                             <p className="card-text">
                                                                 {bootcamp.careers.map(career => `${career}, `)}
@@ -79,7 +107,14 @@ const ManageBootcamps = props => {
                                                 </div>
                                             </div>
 
-                                            <form className="mb-4">
+                                            <form
+                                                className="mb-4"
+                                                onSubmit={event => {
+                                                    event.preventDefault();
+                                                    handleUpload(bootcamp._id);
+                                                }}
+                                                encType="multipart/form-data"
+                                            >
                                                 <div className="form-group">
                                                     <div className="custom-file">
 
@@ -88,6 +123,8 @@ const ManageBootcamps = props => {
                                                             name="photo"
                                                             className="custom-file-input"
                                                             id="photo"
+                                                            accept="image/*"
+                                                            onChange={handeChangeUpload}
                                                         />
                                                         <label
                                                             className="custom-file-label"
