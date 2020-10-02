@@ -1,6 +1,6 @@
 import styles from '../../styles/forms.module.css';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { Router, useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import useAuth from '../../context/auth';
@@ -8,9 +8,10 @@ import useToaster from '../../context/toaster';
 import API_URL, { API_OPTIONS_PUT } from '../../api/api';
 
 const ManageAccount = () => {
-    const { query } = useRouter();
+    const router = useRouter();
     const { user } = useAuth();
     const { error, success, info, dismiss } = useToaster();
+    const [isOtp, setIsOtp] = useState(user.currentUser.otp)
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
 
@@ -53,6 +54,28 @@ const ManageAccount = () => {
         success('Account succesfully updated!')
     })
 
+    const handleToggleOTP = useCallback(async () => {
+        const infoId = info('Please wait ...')
+
+        const options = {
+            ...API_OPTIONS_PUT,
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        }
+
+        const raw = await fetch(`${API_URL}/api/v1/auth/otp`, options)
+        const parsed = await raw.json();
+        dismiss(infoId)
+
+        if (!parsed.success) {
+            return error(parsed.data)
+        }
+
+        setIsOtp(!isOtp)
+        success(parsed.data)
+    })
+
     return (
         <section className={`container mt-5 ${styles.custom_mt}`}>
 
@@ -62,6 +85,15 @@ const ManageAccount = () => {
                 <div className="col-md-8 m-auto">
                     <div className="card bg-white py-2 px-4">
                         <div className="card-body">
+                            {
+                                user && isOtp
+                                    ? <span className="float-right badge badge-pill badge-success">
+                                        OTP Enabled
+                                    </span>
+                                    : <span className="float-right badge badge-pill badge-warning">
+                                        OTP Disabled
+                                    </span>
+                            }
                             <h1 className="mb-2">Manage Account</h1>
                             <form onSubmit={handleSubmit} method="POST">
 
@@ -89,31 +121,48 @@ const ManageAccount = () => {
                                     />
                                 </div>
 
+                                <div className="form-group">
+                                    <div className="row">
+                                        <div className="col-md-6">
+                                            <input
+                                                type="button"
+                                                value="Toggle OTP"
+                                                className="btn btn-dark btn-block"
+                                                onClick={handleToggleOTP}
+                                            />
+                                        </div>
+                                        <div className="col-md-6">
+                                            <Link href={`/user/${router.query.userid}/manage/password`}>
+                                                <a className="btn btn-secondary btn-block"
+                                                >Update Password</a>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="form-group">
+                                    <div className="row">
+                                        <div className="col-md-12">
+                                            <input
+                                                type="submit"
+                                                value="Save"
+                                                className="btn btn-primary btn-block"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <small className="form-text text-muted">
                                     * Only admins can change their account informations
                                 </small>
 
                                 <small className="form-text text-muted">
                                     * Changing your email will reset your role to publisher since you need to confirm your email again. Upon confirmation, Please request to be an admin again.
-                                </small> <br />
+                                </small>
 
-                                <div className="form-group">
-                                    <div className="row">
-                                        <div className="col-md-6">
-                                            <input
-                                                type="submit"
-                                                value="Save"
-                                                className="btn btn-primary btn-block mb-4"
-                                            />
-                                        </div>
-                                        <div className="col-md-6">
-                                            <Link href={`/user/${query.userid}/manage/password`}>
-                                                <a className="btn btn-secondary btn-block mb-4"
-                                                >Update Password</a>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </div>
+                                <small className="form-text text-muted">
+                                    * OTP will take precedence upon enabling it. Therefore, upon disabling, you'll be needing to login using the password that you are using before enabling it.
+                                </small>
 
                             </form>
                         </div>

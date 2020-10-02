@@ -12,14 +12,14 @@ const LoginForm = () => {
     const { info, error, dismiss } = useToaster();
     const { handleSetUser } = useAuth();
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [token, setToken] = useState('');
 
     const handleChange = useCallback(event => {
         const { name, value } = event.target;
 
         switch (name) {
             case 'email': setEmail(value); break;
-            case 'password': setPassword(value); break;
+            case 'token': setToken(value); break;
             default: null;
         }
     })
@@ -30,10 +30,10 @@ const LoginForm = () => {
 
         const options = {
             ...API_OPTIONS,
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({ email, token })
         }
 
-        const raw = await fetch(`${API_URL}/api/v1/auth/signin`, options)
+        const raw = await fetch(`${API_URL}/api/v1/auth/otp`, options)
         const parsed = await raw.json();
         dismiss(infoId)
 
@@ -41,7 +41,7 @@ const LoginForm = () => {
             return error(parsed.msg)
         }
 
-        setEmail(''); setPassword('');
+        setEmail(''); setToken('');
         handleSetUser(parsed)
         router.push('/')
     })
@@ -57,7 +57,7 @@ const LoginForm = () => {
                                 <ToastContainer />
 
                                 <span className="float-right">
-                                    Login <Link href="/auth/login_otp"><a>via OTP</a></Link>
+                                    Login <Link href="/auth/login"><a>via password</a></Link>
                                 </span>
 
                                 <h1>
@@ -84,13 +84,13 @@ const LoginForm = () => {
                                         />
                                     </div>
                                     <div className="form-group mb-4">
-                                        <label htmlFor="password">Password</label>
+                                        <label htmlFor="password">Token</label>
                                         <input
-                                            type="password"
-                                            name="password"
+                                            type="text"
+                                            name="token"
                                             className="form-control"
-                                            placeholder="Enter password"
-                                            value={password}
+                                            placeholder="Enter OTP Token"
+                                            value={token}
                                             onChange={handleChange}
                                             required
                                         />
@@ -103,7 +103,7 @@ const LoginForm = () => {
                                         />
                                     </div>
                                 </form>
-                                <p><Link href="/auth/password_reset"><a>Forgot Password?</a></Link></p>
+                                <p><Link href="/auth/password_reset"><a>Lost OTP Authenticator key?</a></Link></p>
                             </div>
                         </div>
                     </div>
