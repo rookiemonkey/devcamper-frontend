@@ -101,7 +101,7 @@ const EditCourseForm = props => {
                                     &nbsp; Manage Courses
                                 </a>
                             </Link>
-                            <h1 className="mb-2">DevWorks Bootcamp</h1>
+                            <h1 className="mb-2">{title}</h1>
                             <h3 className="text-primary mb-4">Edit Course</h3>
                             <form onSubmit={handleSubmit} method="POST">
                                 <div className="form-group">

@@ -1,7 +1,7 @@
 import Head from 'next/head'
-import Navigation from '../../../../components/Navigation';
-import EditCourseForm from '../../../../components/course/FormEditCourse';
-import API_URL from '../../../../api/api';
+import Navigation from '../../../../../components/Navigation';
+import EditCourseForm from '../../../../../components/course/FormEditCourse';
+import API_URL from '../../../../../api/api';
 
 const EditCourse = props => {
     const { data } = props.course;

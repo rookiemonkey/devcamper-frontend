@@ -120,7 +120,7 @@ const ManageCourses = props => {
                                                                         <tr key={ind}>
                                                                             <td>{course.title}</td>
                                                                             <td>
-                                                                                <Link href={`/bootcamp/${bootcamp._id}/${course._id}/edit`}>
+                                                                                <Link href={`/bootcamp/${bootcamp._id}/courses/${course._id}/edit`}>
                                                                                     <a className="btn btn-secondary float-right mx-1" >
                                                                                         <i className="fas fa-pencil-alt"></i>
                                                                                     </a>
