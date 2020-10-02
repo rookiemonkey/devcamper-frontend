@@ -30,16 +30,26 @@ const PasswordResetForm = () => {
     })
 
     return (
-        <section className={`form mt-5 ${styles.custom_mt}`}>
+        <section className={`container mt-5 ${styles.custom_mt}`}>
             <div className="row">
-                <div className="col-md-8 m-auto">
+                <div className="col-md-6 m-auto">
                     <div className="card bg-white py-2 px-4">
                         <div className="card-body">
 
                             <ToastContainer />
 
-                            <Link href="/auth/login"><a>Back to login</a></Link>
-                            <h1 className="mb-2">Reset Password</h1>
+                            <Link href="/auth/login">
+                                <a>
+                                    <i className="fas fa-chevron-left"></i>
+                                    &nbsp; Back to login
+                                </a>
+                            </Link>
+
+                            <h1 className="my-3">
+                                <i class="fas fa-unlock-alt"></i>
+                                    &nbsp; Reset Password
+                            </h1>
+
                             <p>	Use this form to reset your password using the registered email address.</p>
                             <form onSubmit={handleSubmit} method="POST">
                                 <div className="form-group">
@@ -57,7 +67,7 @@ const PasswordResetForm = () => {
                                     <input
                                         type="submit"
                                         value="Reset Password"
-                                        className="btn btn-dark btn-block"
+                                        className="btn btn-primary btn-block"
                                     />
                                 </div>
                             </form>

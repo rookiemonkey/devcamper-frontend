@@ -1,25 +1,19 @@
 import styles from '../../styles/forms.module.css';
-import Link from 'next/link'
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { useState, useCallback } from 'react';
 import { ToastContainer } from 'react-toastify';
-import useAuth from '../../context/auth';
 import useToaster from '../../context/toaster';
 import API_URL, { API_OPTIONS } from '../../api/api';
 
-const LoginFormOTP = () => {
-    const router = useRouter();
-    const { info, error, dismiss } = useToaster();
-    const { handleSetUser } = useAuth();
+const OTPResetForm = () => {
+    const { info, error, dismiss, success } = useToaster();
     const [email, setEmail] = useState('');
-    const [token, setToken] = useState('');
 
     const handleChange = useCallback(event => {
         const { name, value } = event.target;
 
         switch (name) {
             case 'email': setEmail(value); break;
-            case 'token': setToken(value); break;
             default: null;
         }
     })
@@ -30,10 +24,10 @@ const LoginFormOTP = () => {
 
         const options = {
             ...API_OPTIONS,
-            body: JSON.stringify({ email, token })
+            body: JSON.stringify({ email })
         }
 
-        const raw = await fetch(`${API_URL}/api/v1/auth/otp`, options)
+        const raw = await fetch(`${API_URL}/api/v1/auth/otp/reset`, options)
         const parsed = await raw.json();
         dismiss(infoId)
 
@@ -41,9 +35,8 @@ const LoginFormOTP = () => {
             return error(parsed.msg)
         }
 
-        setEmail(''); setToken('');
-        handleSetUser(parsed)
-        router.push('/')
+        setEmail('');
+        success(parsed.msg)
     })
 
     return (
@@ -56,19 +49,17 @@ const LoginFormOTP = () => {
 
                                 <ToastContainer />
 
-                                <span className="float-right">
-                                    Login <Link href="/auth/login"><a>via password</a></Link>
-                                </span>
+                                <Link href="/auth/login_otp">
+                                    <a>
+                                        <i className="fas fa-chevron-left"></i>
+                                    &nbsp; Back to login via OTP
+                                    </a>
+                                </Link>
 
-                                <h1>
-                                    <i className="fas fa-sign-in-alt"></i>
-                                    &nbsp; Login
+                                <h1 className="my-3">
+                                    <i class="fas fa-unlock-alt"></i>
+                                    &nbsp; Reset OTP
                                 </h1>
-
-                                <p>
-                                    Log in to list your bootcamp or rate, review and favorite
-                                    bootcamps
-								</p>
 
                                 <form method="POST" onSubmit={handleSubmit}>
                                     <div className="form-group">
@@ -83,27 +74,14 @@ const LoginFormOTP = () => {
                                             required
                                         />
                                     </div>
-                                    <div className="form-group mb-4">
-                                        <label htmlFor="password">Token</label>
-                                        <input
-                                            type="text"
-                                            name="token"
-                                            className="form-control"
-                                            placeholder="Enter OTP Token"
-                                            value={token}
-                                            onChange={handleChange}
-                                            required
-                                        />
-                                    </div>
                                     <div className="form-group">
                                         <input
                                             type="submit"
-                                            value="Login"
+                                            value="Reset"
                                             className="btn btn-primary btn-block"
                                         />
                                     </div>
                                 </form>
-                                <p><Link href="/auth/otp_reset"><a>Lost OTP Authenticator key?</a></Link></p>
                             </div>
                         </div>
                     </div>
@@ -113,4 +91,4 @@ const LoginFormOTP = () => {
     )
 }
 
-export default LoginFormOTP;
+export default OTPResetForm;
