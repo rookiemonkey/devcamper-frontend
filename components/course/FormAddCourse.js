@@ -173,7 +173,7 @@ const AddCourseForm = () => {
                                     <input
                                         type="submit"
                                         value="Add Course"
-                                        className="btn btn-dark btn-block"
+                                        className="btn btn-primary btn-block"
                                     />
                                 </div>
                             </form>

@@ -103,7 +103,7 @@ const ManageAccount = () => {
                                             <input
                                                 type="submit"
                                                 value="Save"
-                                                className="btn btn-success btn-block mb-4"
+                                                className="btn btn-primary btn-block mb-4"
                                             />
                                         </div>
                                         <div className="col-md-6">

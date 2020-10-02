@@ -55,13 +55,14 @@ const ManagePassword = () => {
     })
 
     return (
-        <section className={`form mt-5 ${styles.custom_mt}`}>
+        <section className={`container mt-5 ${styles.custom_mt}`}>
+
+            <ToastContainer />
+
             <div className="row">
                 <div className="col-md-8 m-auto">
                     <div className="card bg-white py-2 px-4">
                         <div className="card-body">
-
-                            <ToastContainer />
 
                             <Link href={`/user/${user.currentUser._id}/manage/account`}>
                                 <a className="btn btn-link text-secondary my-3">
@@ -109,7 +110,7 @@ const ManagePassword = () => {
                                     <input
                                         type="submit"
                                         value="Update Password"
-                                        className="btn btn-dark btn-block"
+                                        className="btn btn-primary btn-block"
                                     />
                                 </div>
                             </form>

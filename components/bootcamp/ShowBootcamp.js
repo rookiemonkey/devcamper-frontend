@@ -1,9 +1,11 @@
 import styles from '../../styles/forms.module.css';
+import bootcamp from '../../styles/bootcamp.module.css';
+import Link from 'next/link';
 import formatPrice from '../../utilities/formatPrice';
 
 const ShowBootcamp = props => {
     const { _id, name, jobAssistance, jobGuarantee, housing, acceptGi,
-        location, careers, photo, phone, email, website, description, user,
+        location, careers, photo, phone, email, website, description,
         averageCost, courses, averageRating
     } = props.bootcamp;
 
@@ -16,47 +18,83 @@ const ShowBootcamp = props => {
                     <div className="col-md-8">
                         <h1>{name}</h1>
 
-                        <p>{description}</p>
-
-                        <p className="lead mb-4">
-                            Average Course Cost &nbsp;
-                            <span className="text-primary">${formatPrice(averageCost)}</span>
+                        <p className={`lead my-2 ${bootcamp.bootcamp_meta}`}>
+                            <i className="fas fa-money-bill-wave-alt text-success"></i> &nbsp;
+                            <span className="text-primary">
+                                {
+                                    averageCost
+                                        ? `$${formatPrice(averageCost)} (Average)`
+                                        : <i>'No existing course'</i>
+                                }
+                            </span>
                         </p>
 
-                        {
-                            courses.map((course, ind) => (
-                                <div className="card mb-3" key={ind}>
-                                    <h5 className="card-header bg-primary text-white">
-                                        {course.title}
-                                    </h5>
-                                    <div className="card-body">
-                                        <h5 className="card-title">
-                                            Duration: {course.weeks} Weeks
-                                        </h5>
-                                        <p className="card-text">{course.description}</p>
-                                        <ul className="list-group mb-3">
-                                            <li className="list-group-item">
-                                                <i className="fas fa-money-bill-wave-alt text-success"></i> &nbsp;
-                                                <b>Cost:</b> ${formatPrice(course.tuition)}
-                                            </li>
-                                            <li className="list-group-item">
-                                                <i className="far fa-hand-paper text-info"></i> &nbsp;
-                                                <b>Skill Required:</b> {course.minimumSkill}
-                                            </li>
-                                            <li className="list-group-item">
-                                                <i className="fas fa-user-graduate text-primary"></i> &nbsp;
-                                                <b>Scholarship Available:</b> &nbsp;
-                                                {
-                                                    course.scholarshipAvailable
-                                                        ? <i className="fas fa-check text-success"></i>
-                                                        : <i className="fas fa-times text-danger"></i>
-                                                }
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                        <p className={`lead my-2 ${bootcamp.bootcamp_meta}`}>
+                            <i className="fas fa-envelope text-warning"></i> &nbsp;
+                            <span className="text-primary">
+                                {email}
+                            </span>
+                        </p>
 
-                            ))
+                        <p className={`lead my-2 ${bootcamp.bootcamp_meta}`}>
+                            <i className="fas fa-phone text-secondary"></i> &nbsp;
+                            <span className="text-primary">
+                                {phone}
+                            </span>
+                        </p>
+
+                        <p className={`lead my-2 ${bootcamp.bootcamp_meta}`}>
+                            <i className="fas fa-map-marker-alt text-danger"></i> &nbsp;
+                            <span className="text-primary">
+                                {location.formattedAddress}
+                            </span>
+                        </p>
+
+                        <p className={`lead my-2 ${bootcamp.bootcamp_meta}`}>
+                            <i className="far fa-hand-paper text-info"></i> &nbsp;
+                            <span className="text-primary">
+                                {careers.join(', ')}
+                            </span>
+                        </p>
+
+                        <p className="my-3">{description}</p>
+
+                        {
+                            courses.length > 0
+                                ? courses.map((course, ind) => (
+                                    <div className="card mb-3" key={ind}>
+                                        <h5 className="card-header bg-primary text-white">
+                                            {course.title}
+                                        </h5>
+                                        <div className="card-body">
+                                            <h5 className="card-title">
+                                                Duration: {course.weeks} Weeks
+                                        </h5>
+                                            <p className="card-text">{course.description}</p>
+                                            <ul className="list-group mb-3">
+                                                <li className="list-group-item">
+                                                    <i className="fas fa-money-bill-wave-alt text-success"></i> &nbsp;
+                                                <b>Cost:</b> ${formatPrice(course.tuition)}
+                                                </li>
+                                                <li className="list-group-item">
+                                                    <i className="far fa-hand-paper text-info"></i> &nbsp;
+                                                <b>Skill Required:</b> {course.minimumSkill}
+                                                </li>
+                                                <li className="list-group-item">
+                                                    <i className="fas fa-user-graduate text-primary"></i> &nbsp;
+                                                <b>Scholarship Available:</b> &nbsp;
+                                                    {
+                                                        course.scholarshipAvailable
+                                                            ? <i className="fas fa-check text-success"></i>
+                                                            : <i className="fas fa-times text-danger"></i>
+                                                    }
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                ))
+                                : null
                         }
 
                     </div>
@@ -71,20 +109,29 @@ const ShowBootcamp = props => {
 
                         <h1 className="text-center my-4">
                             <span className="badge badge-secondary badge-success rounded-circle p-3">
-                                {averageRating ? averageRating : 0.0}
+                                {averageRating ? parseFloat(averageRating) : '0.0'}
                             </span> Rating
                         </h1>
 
-                        <a href="reviews.html" className="btn btn-dark btn-block my-3">
-                            <i className="fas fa-comments"></i>&nbsp; Read Reviews
-                        </a>
+                        <Link href={`/bootcamp/${_id}/reviews`}>
+                            <a className="btn btn-dark btn-block my-3">
+                                <i className="fas fa-comments"></i> &nbsp; Read Reviews
+                            </a>
+                        </Link>
 
-                        <a href="add-review.html" className="btn btn-light btn-block my-3">
-                            <i className="fas fa-pencil-alt"></i>&nbsp; Write a Review
-                        </a>
+                        <Link href={`/bootcamp/${_id}/review`}>
+                            <a href="add-review.html" className="btn btn-light btn-block my-3">
+                                <i className="fas fa-pencil-alt"></i> &nbsp; Write a Review
+                            </a>
+                        </Link>
 
-                        <a href="#" target="_blank" className="btn btn-secondary btn-block my-3">
-                            <i className="fas fa-globe"></i>&nbsp; Visit Website
+                        <a
+                            href={website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn btn-secondary btn-block my-3"
+                        >
+                            <i className="fas fa-globe"></i> &nbsp; Visit Website
                         </a>
 
                         <div id='map' style={{ width: '100%', height: '300px' }}> </div>

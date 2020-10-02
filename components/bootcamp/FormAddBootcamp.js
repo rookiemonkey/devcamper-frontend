@@ -269,7 +269,7 @@ const AddBootcampForm = () => {
                     <input
                         type="submit"
                         value="Submit Bootcamp"
-                        className="btn btn-success btn-block my-4"
+                        className="btn btn-primary btn-block my-4"
                     />
                     <Link href={`/user/${user.currentUser._id}/manage/bootcamps`}>
                         <a className="btn btn-danger btn-block mb-4"
