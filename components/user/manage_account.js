@@ -1,4 +1,6 @@
 import styles from '../../styles/forms.module.css';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import useAuth from '../../context/auth';
@@ -6,6 +8,7 @@ import useToaster from '../../context/toaster';
 import API_URL, { API_OPTIONS_PUT } from '../../api/api';
 
 const ManageAccount = () => {
+    const { query } = useRouter();
     const { user } = useAuth();
     const { error, success, info, dismiss } = useToaster();
     const [email, setEmail] = useState('');
@@ -87,11 +90,11 @@ const ManageAccount = () => {
                                 </div>
 
                                 <small className="form-text text-muted">
-                                    *Only admins can change their account informations
+                                    * Only admins can change their account informations
                                 </small>
 
                                 <small className="form-text text-muted">
-                                    *Changing your email will reset your role to publisher since you need to confirm your email again. Upon confirmation, Please request to be an admin again.
+                                    * Changing your email will reset your role to publisher since you need to confirm your email again. Upon confirmation, Please request to be an admin again.
                                 </small> <br />
 
                                 <div className="form-group">
@@ -100,14 +103,14 @@ const ManageAccount = () => {
                                             <input
                                                 type="submit"
                                                 value="Save"
-                                                className="btn btn-success btn-block"
+                                                className="btn btn-success btn-block mb-4"
                                             />
                                         </div>
                                         <div className="col-md-6">
-                                            <a
-                                                href="update-password.html"
-                                                className="btn btn-secondary btn-block"
-                                            >Update Password</a>
+                                            <Link href={`/user/${query.userid}/manage/password`}>
+                                                <a className="btn btn-secondary btn-block mb-4"
+                                                >Update Password</a>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>

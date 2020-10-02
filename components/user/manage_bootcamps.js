@@ -1,11 +1,16 @@
 import styles from '../../styles/forms.module.css';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useCallback, useEffect, useState } from 'react';
 import useAuth from '../../context/auth';
+import useToaster from '../../context/toaster';
+import API_URL, { API_OPTIONS_DELETE } from '../../api/api';
 import ManageBootcampsNone from './manage_bootcamps_none';
 
 const ManageBootcamps = props => {
+    const router = useRouter();
     const { user } = useAuth();
+    const { error, info, dismiss } = useToaster();
     const [bootcamps, setBootcamps] = useState(null);
 
     useEffect(() => {
@@ -13,6 +18,22 @@ const ManageBootcamps = props => {
             setBootcamps(props.bootcamps)
         }
     }, [props.bootcamps])
+
+    const handleDelete = useCallback(async bootcamp_id => {
+        const infoId = info('Please wait ...');
+
+        API_OPTIONS_DELETE.headers['Authorization'] = `Bearer ${user.token}`;
+
+        const raw = await fetch(`${API_URL}/api/v1/bootcamps/${bootcamp_id}`, API_OPTIONS_DELETE);
+        const parsed = await raw.json();
+        dismiss(infoId)
+
+        if (!parsed.success) {
+            return error(parsed.msg)
+        }
+
+        router.reload();
+    }, [])
 
     return (
         <section className={`container mt-5 ${styles.custom_mt}`}>
@@ -82,7 +103,7 @@ const ManageBootcamps = props => {
                                                 />
                                             </form>
 
-                                            <Link href={`/user/${user.currentUser._id}/manage/bootcamp?id=${bootcamp._id}`}>
+                                            <Link href={`/bootcamp/${bootcamp._id}/edit`}>
                                                 <a className="btn btn-primary btn-block"
                                                 >Edit Bootcamp Details</a>
                                             </Link>
@@ -92,10 +113,10 @@ const ManageBootcamps = props => {
                                                 >Manage Courses</a>
                                             </Link>
 
-                                            <Link href="#">
-                                                <a className="btn btn-danger btn-block"
-                                                >Remove Bootcamp</a>
-                                            </Link>
+                                            <a
+                                                onClick={() => { handleDelete(bootcamp._id) }}
+                                                className="btn btn-danger btn-block"
+                                            >Remove Bootcamp</a>
 
                                         </div>
                                     ))

@@ -1,5 +1,6 @@
 import styles from '../../styles/forms.module.css';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useState, useCallback } from 'react';
 import { ToastContainer } from 'react-toastify';
 import useAuth from '../../context/auth';
@@ -8,6 +9,7 @@ import API_URL, { API_OPTIONS_DELETE } from '../../api/api';
 import ManageCoursesNone from './manage_courses_none';
 
 const ManageCourses = props => {
+    const router = useRouter();
     const { user } = useAuth();
     const { success, info, error, dismiss } = useToaster();
     const [courses, setCourses] = useState({});
@@ -40,7 +42,7 @@ const ManageCourses = props => {
             return error(parsed.msg)
         }
 
-        success('Course succesfully deleted!')
+        router.reload();
     }, [])
 
     return (
@@ -54,7 +56,7 @@ const ManageCourses = props => {
 
                         {
                             isLoaded && courses.data.length === 0
-                                ? <ManageCoursesNone bootcamps={bootcamps}/>
+                                ? <ManageCoursesNone bootcamps={bootcamps} />
                                 : <div className="card-body">
                                     <Link href={`/user/${user.currentUser._id}/manage/bootcamps`}>
                                         <a className="btn btn-link text-secondary my-3">

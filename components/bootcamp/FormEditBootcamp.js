@@ -5,24 +5,39 @@ import Select from 'react-select'
 import { ToastContainer } from 'react-toastify';
 import useAuth from '../../context/auth';
 import useToaster from '../../context/toaster';
-import API_URL, { API_OPTIONS } from '../../api/api';
+import API_URL, { API_OPTIONS_PUT } from '../../api/api';
 
-const AddBootcampForm = () => {
+const EditBootcampForm = props => {
+
+    const careerOptions = [
+        { value: 'Web Development', label: 'Web Development' },
+        { value: 'Mobile Development', label: 'Mobile Development' },
+        { value: 'UI/UX', label: 'UI/UX' },
+        { value: 'Data Science', label: 'Data Science' },
+        { value: 'Business', label: 'Business' },
+        { value: 'Others', label: 'Others' }
+    ]
+
+    const { bootcamp } = props;
     const { user } = useAuth();
     const { error, success, info, dismiss } = useToaster();
-    const [name, setName] = useState('');
-    const [address, setAddress] = useState('');
-    const [phone, setPhone] = useState('');
-    const [email, setEmail] = useState('');
-    const [website, setWebsite] = useState('');
-    const [description, setDescription] = useState('');
-    const [careers, setCareers] = useState([]);
-    const [careersRef, setCareersRef] = useState([]);
+    const [name, setName] = useState(bootcamp.name);
+    const [address, setAddress] = useState(bootcamp.location.formattedAddress);
+    const [phone, setPhone] = useState(bootcamp.phone);
+    const [email, setEmail] = useState(bootcamp.email);
+    const [website, setWebsite] = useState(bootcamp.website);
+    const [description, setDescription] = useState(bootcamp.description);
+    const [careers, setCareers] = useState(bootcamp.careers);
+
+    const [careersRef, setCareersRef] = useState(bootcamp.careers.map(career => {
+        return careerOptions.filter(option => option.value == career)[0];
+    }));
+
     const [offers, setOffer] = useState({
-        housing: false,
-        jobAssistance: false,
-        jobGuarantee: false,
-        acceptGi: false
+        housing: bootcamp.housing,
+        jobAssistance: bootcamp.jobAssistance,
+        jobGuarantee: bootcamp.jobGuarantee,
+        acceptGi: bootcamp.acceptGi
     })
 
     const handleChange = useCallback(({ target }) => {
@@ -52,10 +67,10 @@ const AddBootcampForm = () => {
         event.preventDefault()
         const infoId = info('Please wait ...')
 
-        API_OPTIONS.headers['Authorization'] = `Bearer ${user.token}`;
+        API_OPTIONS_PUT.headers['Authorization'] = `Bearer ${user.token}`;
 
         const options = {
-            ...API_OPTIONS,
+            ...API_OPTIONS_PUT,
             body: JSON.stringify({
                 name, address, phone,
                 email, website, description,
@@ -63,7 +78,7 @@ const AddBootcampForm = () => {
             })
         }
 
-        const raw = await fetch(`${API_URL}/api/v1/bootcamps`, options)
+        const raw = await fetch(`${API_URL}/api/v1/bootcamps/${bootcamp._id}`, options)
         const parsed = await raw.json();
         dismiss(infoId)
 
@@ -71,36 +86,15 @@ const AddBootcampForm = () => {
             return error(parsed.msg)
         }
 
-        setCareers([]); setCareersRef([]);
-        setName(''); setAddress(''); setPhone(''); setEmail('');
-        setWebsite(''); setDescription(''); setOffer({
-            housing: false,
-            jobAssistance: false,
-            jobGuarantee: false,
-            acceptGi: false
-        })
-
-        success('Bootcamp succesfully created!')
+        success('Bootcamp succesfully updated!')
     })
-
-    const careerOptions = [
-        { value: 'Web Development', label: 'Web Development' },
-        { value: 'Mobile Development', label: 'Mobile Development' },
-        { value: 'UI/UX', label: 'UI/UX' },
-        { value: 'Data Science', label: 'Data Science' },
-        { value: 'Business', label: 'Business' },
-        { value: 'Others', label: 'Others' }
-    ]
 
     return (
         <section className={`container mt-5 ${styles.custom_mt}`}>
 
             <ToastContainer />
 
-            <h1 className="mb-2">Add Bootcamp</h1>
-            <p>
-                Important: You must be affiliated with a bootcamp to add to DevCamper
-			</p>
+            <h1 className="mb-2">Edit Bootcamp</h1>
 
             <form method="POST" onSubmit={handleSubmit}>
                 <div className="row">
@@ -255,12 +249,6 @@ const AddBootcampForm = () => {
                                         Accepts GI Bill
 									</label>
                                 </div>
-                                <p className="text-muted my-4">
-                                    * After you add the bootcamp, you can add the specific courses offered
-								</p>
-                                <p className="text-muted my-4">
-                                    * Publishers can only add one bootcamp
-                                </p>
                             </div>
                         </div>
                     </div>
@@ -268,7 +256,7 @@ const AddBootcampForm = () => {
                 <div className="form-group">
                     <input
                         type="submit"
-                        value="Submit Bootcamp"
+                        value="Update Bootcamp"
                         className="btn btn-success btn-block my-4"
                     />
                     <Link href={`/user/${user.currentUser._id}/manage/bootcamps`}>
@@ -281,4 +269,4 @@ const AddBootcampForm = () => {
     )
 }
 
-export default AddBootcampForm;
+export default EditBootcampForm;
