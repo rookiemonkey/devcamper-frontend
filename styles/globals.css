@@ -230,3 +230,11 @@ a.text-primary:hover {
 	color: rgb(192, 56, 27) !important;
 	text-decoration: none;
 }
+.mapboxgl-popup-content {
+	background-color: var(--primary) !important;
+	color: white !important;
+}
+
+.mapboxgl-popup-tip {
+	border-top-color: var(--primary) !important;
+}
