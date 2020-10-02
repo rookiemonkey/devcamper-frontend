@@ -50,7 +50,7 @@ const OTPResetForm = () => {
                                 <ToastContainer />
 
                                 <Link href="/auth/login_otp">
-                                    <a>
+                                    <a className="text-secondary my-5">
                                         <i className="fas fa-chevron-left"></i>
                                     &nbsp; Back to login via OTP
                                     </a>

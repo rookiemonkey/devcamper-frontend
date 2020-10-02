@@ -117,7 +117,7 @@ const RegisterForm = () => {
                                         />
                                     </div>
 
-                                    <div className="card card-body mb-3">
+                                    <div className="card card-body mb-1">
                                         <h5>User Role</h5>
                                         <div className="form-check">
                                             <input
@@ -146,9 +146,9 @@ const RegisterForm = () => {
 											</label>
                                         </div>
                                     </div>
-                                    <p className="text-danger">
+                                    <small className="text-form text-danger">
                                         * You must be affiliated with the bootcamp in some way in order to add it to DevCamper.
-									</p>
+									</small> <br />  <br />
                                     <div className="form-group">
                                         <input
                                             type="submit"

@@ -161,14 +161,14 @@ const ManageBootcamps = props => {
                                     : <ManageBootcampsNone />
                             }
 
-                            <p className="text-muted mt-5">
+                            <small className="form-text text-muted">
                                 * Publishers can only add one bootcamp
-							</p>
+							</small>
 
-                            <p className="text-muted">
+                            <small className="form-text text-muted">
                                 * You must be affiliated with the bootcamp in some way in order
                                 to add it to DevCamper.
-							</p>
+							</small>
 
                         </div>
                     </div>

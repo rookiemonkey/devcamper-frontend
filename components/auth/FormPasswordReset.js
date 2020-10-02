@@ -39,7 +39,7 @@ const PasswordResetForm = () => {
                             <ToastContainer />
 
                             <Link href="/auth/login">
-                                <a>
+                                <a className="text-secondary my-5">
                                     <i className="fas fa-chevron-left"></i>
                                     &nbsp; Back to login
                                 </a>
