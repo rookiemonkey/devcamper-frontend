@@ -2,6 +2,7 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react';
 import useAuth from '../../../../context/auth';
 import Navigation from '../../../../components/Navigation';
+import Footer from '../../../../components/Footer';
 import ManageCourses from '../../../../components/user/manage_courses';
 import API_URL from '../../../../api/api';
 
@@ -39,6 +40,8 @@ const UserCourses = () => {
                 courses={courses}
                 bootcamps={bootcamps}
             />
+
+            <Footer />
 
         </main>
     )

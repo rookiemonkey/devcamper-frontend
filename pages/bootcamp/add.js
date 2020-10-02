@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Navigation from '../../components/Navigation';
+import Footer from '../../components/Footer';
 import AddBootcampForm from '../../components/bootcamp/FormAddBootcamp';
 
 const AddBootcamp = () => {
@@ -14,6 +15,8 @@ const AddBootcamp = () => {
             <Navigation />
 
             <AddBootcampForm />
+
+            <Footer />
 
         </main>
     )

@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Navigation from '../../../../components/Navigation';
+import Footer from '../../../../components/Footer';
 import Reviews from '../../../../components/review/ShowReviews';
 import API_URL from '../../../../api/api';
 
@@ -19,6 +20,8 @@ const BootcampReviews = props => {
                 bootcamp={bootcamp}
                 reviews={reviews}
             />
+
+            <Footer />
 
         </main>
     )

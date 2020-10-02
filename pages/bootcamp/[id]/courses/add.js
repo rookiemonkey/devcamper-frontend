@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Navigation from '../../../../components/Navigation';
+import Footer from '../../../../components/Footer'
 import AddCourseForm from '../../../../components/course/FormAddCourse';
 import API_URL from '../../../../api/api';
 
@@ -18,6 +19,8 @@ const AddCourse = props => {
             <AddCourseForm
                 bootcamp={data}
             />
+
+            <Footer />
 
         </main>
     )

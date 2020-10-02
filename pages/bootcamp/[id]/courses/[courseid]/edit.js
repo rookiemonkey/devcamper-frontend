@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Navigation from '../../../../../components/Navigation';
+import Footer from '../../../../../components/Footer';
 import EditCourseForm from '../../../../../components/course/FormEditCourse';
 import API_URL from '../../../../../api/api';
 
@@ -18,6 +19,8 @@ const EditCourse = props => {
             <EditCourseForm
                 course={data}
             />
+
+            <Footer />
 
         </main>
     )

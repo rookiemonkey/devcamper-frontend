@@ -57,7 +57,7 @@ const OTPResetForm = () => {
                                 </Link>
 
                                 <h1 className="my-3">
-                                    <i class="fas fa-unlock-alt"></i>
+                                    <i className="fas fa-unlock-alt"></i>
                                     &nbsp; Reset OTP
                                 </h1>
 

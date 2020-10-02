@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Navigation from '../../components/Navigation';
+import Footer from '../../components/Footer';
 import LoginFormOTP from '../../components/auth/FormLoginOTP';
 
 function LoginOTP() {
@@ -12,6 +13,8 @@ function LoginOTP() {
             <Navigation />
 
             <LoginFormOTP />
+
+            <Footer />
 
         </main>
     )

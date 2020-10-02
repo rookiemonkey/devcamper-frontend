@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Navigation from '../../../../components/Navigation';
+import Footer from '../../../../components/Footer';
 import ManageReviews from '../../../../components/user/manage_reviews';
 import API_URL from '../../../../api/api';
 
@@ -18,6 +19,8 @@ const UserReviews = props => {
             <ManageReviews
                 reviews={response}
             />
+
+            <Footer />
 
         </main>
     )

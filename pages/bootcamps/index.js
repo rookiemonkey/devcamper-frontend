@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Navigation from '../../components/Navigation';
+import Footer from '../../components/Footer';
 import BootcampList from '../../components/bootcamps/index';
 import API_URL from '../../api/api';
 
@@ -18,6 +19,8 @@ const Bootcamps = props => {
             <BootcampList
                 bootcamps={data}
             />
+
+            <Footer />
 
         </main>
     )

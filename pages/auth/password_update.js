@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Navigation from '../../components/Navigation';
+import Footer from '../../components/Footer';
 import PasswordUpdateForm from '../../components/auth/FormPasswordUpdate';
 
 function PasswordUpdate() {
@@ -12,6 +13,8 @@ function PasswordUpdate() {
             <Navigation />
 
             <PasswordUpdateForm />
+
+            <Footer />
 
         </main>
     )

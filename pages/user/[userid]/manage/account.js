@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Navigation from '../../../../components/Navigation';
+import Footer from '../../../../components/Footer';
 import ManageAccount from '../../../../components/user/manage_account';
 
 const UserAccount = () => {
@@ -14,6 +15,8 @@ const UserAccount = () => {
             <Navigation />
 
             <ManageAccount />
+
+            <Footer />
 
         </main>
     )

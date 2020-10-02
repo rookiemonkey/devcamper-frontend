@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Navigation from '../../../components/Navigation';
+import Footer from '../../../components/Footer';
 import ShowBootcamp from '../../../components/bootcamp/ShowBootcamp';
 import API_URL from '../../../api/api';
 
@@ -17,6 +18,8 @@ const Bootcamp = props => {
             <ShowBootcamp
                 bootcamp={data}
             />
+
+            <Footer />
 
         </main>
     )

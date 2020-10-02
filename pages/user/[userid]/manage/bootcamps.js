@@ -2,6 +2,7 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react';
 import useAuth from '../../../../context/auth';
 import Navigation from '../../../../components/Navigation';
+import Footer from '../../../../components/Footer';
 import ManageBootcamps from '../../../../components/user/manage_bootcamps';
 import API_URL from '../../../../api/api';
 
@@ -31,6 +32,8 @@ const UserBootcamps = () => {
             <ManageBootcamps
                 bootcamps={bootcamps}
             />
+
+            <Footer />
 
         </main>
     )

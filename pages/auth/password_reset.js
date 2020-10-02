@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Navigation from '../../components/Navigation';
+import Footer from '../../components/Footer';
 import PasswordResetForm from '../../components/auth/FormPasswordReset';
 
 function PasswordReset() {
@@ -12,6 +13,8 @@ function PasswordReset() {
             <Navigation />
 
             <PasswordResetForm />
+
+            <Footer />
 
         </main>
     )

@@ -2,6 +2,7 @@ import styles from '../../styles/confirm.module.css'
 import Head from 'next/head'
 import React, { useEffect, useState } from 'react';
 import Navigation from '../../components/Navigation';
+import Footer from '../../components/Footer';
 import API_URL, { API_OPTIONS } from '../../api/api';
 
 const Confirm = props => {
@@ -56,6 +57,8 @@ const Confirm = props => {
                     </div>
                 </div>
             </section>
+
+            <Footer />
 
         </main>
     )
