@@ -88,7 +88,7 @@ const ManageBootcamps = props => {
                                                         <div className="card-body">
                                                             <h5 className="card-title">
                                                                 <Link href={`/bootcamp/${bootcamp._id}`}>
-                                                                    <a>
+                                                                    <a className="text-primary" >
                                                                         {bootcamp.name} &nbsp;
                                                                         <span className="float-right badge badge-success">
                                                                             {bootcamp.averageRating}

@@ -127,6 +127,10 @@ const ReviewBootcampForm = () => {
                                     />
                                 </div>
 
+                                <p className="text-muted my-4">
+                                    * Only users can leave a review for a bootcamp
+                                </p>
+
                             </form>
                         </div>
                     </div>

@@ -110,7 +110,7 @@ const ShowBootcamp = props => {
                         <h1 className="text-center my-4">
                             <span className="badge badge-secondary badge-success rounded-circle p-3">
                                 {averageRating ? parseFloat(averageRating) : '0.0'}
-                            </span> Rating
+                            </span> &nbsp; Rating
                         </h1>
 
                         <Link href={`/bootcamp/${_id}/reviews`}>
@@ -120,7 +120,7 @@ const ShowBootcamp = props => {
                         </Link>
 
                         <Link href={`/bootcamp/${_id}/review`}>
-                            <a href="add-review.html" className="btn btn-light btn-block my-3">
+                            <a className="btn btn-light btn-block my-3">
                                 <i className="fas fa-pencil-alt"></i> &nbsp; Write a Review
                             </a>
                         </Link>

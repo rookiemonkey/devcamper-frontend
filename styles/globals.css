@@ -225,3 +225,8 @@ body {
 .dropdown-item:hover {
 	background-color: rgb(192, 56, 27) !important;
 }
+
+a.text-primary:hover {
+	color: rgb(192, 56, 27) !important;
+	text-decoration: none;
+}
