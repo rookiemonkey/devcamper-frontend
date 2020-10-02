@@ -8,7 +8,8 @@ import useAuth from '../../context/auth';
 import useToaster from '../../context/toaster';
 import API_URL, { API_OPTIONS } from '../../api/api';
 
-const AddCourseForm = () => {
+const AddCourseForm = props => {
+    const { bootcamp } = props;
     const { query } = useRouter()
     const { user } = useAuth();
     const { success, info, error, dismiss } = useToaster();
@@ -93,7 +94,7 @@ const AddCourseForm = () => {
                                     &nbsp; Manage Courses
                                 </a>
                             </Link>
-                            <h1 className="mb-2">DevWorks Bootcamp</h1>
+                            <h1 className="mb-2">{bootcamp.name}</h1>
                             <h3 className="text-primary mb-4">Add Course</h3>
                             <form onSubmit={handleSubmit} method="POST">
                                 <div className="form-group">

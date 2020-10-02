@@ -100,7 +100,7 @@ const ManageCourses = props => {
                                                         </div>
                                                     </div>
 
-                                                    <Link href={`/bootcamp/${bootcamp.id}/course`}>
+                                                    <Link href={`/bootcamp/${bootcamp.id}/courses/add`}>
                                                         <a className="btn btn-primary btn-block mb-4">
                                                             Add Bootcamp Course
                                                 </a>

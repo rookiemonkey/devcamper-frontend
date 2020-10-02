@@ -26,7 +26,7 @@ const ManageCoursesNone = props => {
             {
                 bootcamps && bootcamps.data.length > 0
                     ? bootcamps.data.map((bootcamp, ind) => (
-                        <Link key={ind} href={`/bootcamp/${bootcamp._id}/course`}>
+                        <Link key={ind} href={`/bootcamp/${bootcamp._id}/courses/add`}>
                             <a className="btn btn-primary btn-block"
                             >Add Your first course for '{bootcamp.name}'</a>
                         </Link>
