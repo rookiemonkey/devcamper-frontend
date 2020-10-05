@@ -6,7 +6,7 @@ const Latest = props => {
     return (
         <section className="latest py-5 bg-light">
             <div className="container">
-                <h3>Latest Bootcamps</h3>
+                <h3>Our Latest Bootcamps</h3>
                 <div className="card-group">
                     {
                         bootcamps.length > 0
