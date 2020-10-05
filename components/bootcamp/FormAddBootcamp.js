@@ -1,6 +1,6 @@
 import styles from '../../styles/forms.module.css';
 import Link from 'next/link';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Select from 'react-select'
 import { ToastContainer } from 'react-toastify';
 import useAuth from '../../context/auth';
@@ -10,6 +10,7 @@ import API_URL, { API_OPTIONS } from '../../api/api';
 const AddBootcampForm = () => {
     const { user } = useAuth();
     const { error, success, info, dismiss } = useToaster();
+    const [userId, setUserId] = useState('');
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [phone, setPhone] = useState('');
@@ -24,6 +25,10 @@ const AddBootcampForm = () => {
         jobGuarantee: false,
         acceptGi: false
     })
+
+    useEffect(() => {
+        setUserId(user.currentUser._id);
+    }, [user])
 
     const handleChange = useCallback(({ target }) => {
         const { name, value } = target;
@@ -271,7 +276,7 @@ const AddBootcampForm = () => {
                         value="Submit Bootcamp"
                         className="btn btn-primary btn-block my-4"
                     />
-                    <Link href={`/user/${user.currentUser._id}/manage/bootcamps`}>
+                    <Link href={`/user/${userId}/manage/bootcamps`}>
                         <a className="btn btn-danger btn-block mb-4"
                         >Cancel</a>
                     </Link>

@@ -11,7 +11,8 @@ const ManageAccount = () => {
     const router = useRouter();
     const { user } = useAuth();
     const { error, success, info, dismiss } = useToaster();
-    const [isOtp, setIsOtp] = useState(user.currentUser.otp)
+    const [userId, setUserId] = useState('');
+    const [isOtp, setIsOtp] = useState('');
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
 
@@ -19,6 +20,8 @@ const ManageAccount = () => {
         if (user && user.success) {
             setName(user.currentUser.name);
             setEmail(user.currentUser.email);
+            setIsOtp(user.currentUser.otp);
+            setUserId(user.currentUser._id);
         }
     }, [user])
 
@@ -43,7 +46,7 @@ const ManageAccount = () => {
             body: JSON.stringify({ email, name })
         }
 
-        const raw = await fetch(`${API_URL}/api/v1/users/${user.currentUser._id}`, options)
+        const raw = await fetch(`${API_URL}/api/v1/users/${userId}`, options)
         const parsed = await raw.json();
         dismiss(infoId)
 

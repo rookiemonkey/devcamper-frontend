@@ -1,6 +1,6 @@
 import styles from '../../styles/forms.module.css';
 import Link from 'next/link';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import useToaster from '../../context/toaster';
 import useAuth from '../../context/auth';
@@ -9,9 +9,14 @@ import API_URL, { API_OPTIONS_PUT } from '../../api/api';
 const ManagePassword = () => {
     const { user } = useAuth();
     const { error, success, info, dismiss } = useToaster();
+    const [userId, setUserId] = useState('');
     const [passwordCurrent, setCurrentPassword] = useState('');
     const [passwordNew, setPasswordNew] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
+
+    useEffect(() => {
+        setUserId(user.currentUser._id);
+    }, [user])
 
     const handleChange = useCallback(event => {
         const { name, value } = event.target;
@@ -64,7 +69,7 @@ const ManagePassword = () => {
                     <div className="card bg-white py-2 px-4">
                         <div className="card-body">
 
-                            <Link href={`/user/${user.currentUser._id}/manage/account`}>
+                            <Link href={`/user/${userId}/manage/account`}>
                                 <a className="btn btn-link text-secondary my-3">
                                     <i className="fas fa-chevron-left"></i>
                                     &nbsp; Manage Account

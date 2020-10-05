@@ -12,16 +12,19 @@ const ManageCourses = props => {
     const router = useRouter();
     const { user } = useAuth();
     const { info, error, dismiss } = useToaster();
+    const [userId, setUserId] = useState('');
     const [courses, setCourses] = useState({});
     const [bootcamps, setBootcamps] = useState({});
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
+        setUserId(user.currentUser._id);
+
         if (props.courses && props.bootcamps) {
             setCourses(props.courses)
             setBootcamps(props.bootcamps)
         }
-    }, [props.courses, props.bootcamps])
+    }, [props.courses, props.bootcamps, user])
 
     useEffect(() => {
         if (Object.keys(bootcamps).length && Object.keys(courses).length) {
@@ -58,7 +61,7 @@ const ManageCourses = props => {
                             isLoaded && courses.data.length === 0
                                 ? <ManageCoursesNone bootcamps={bootcamps} />
                                 : <div className="card-body">
-                                    <Link href={`/user/${user.currentUser._id}/manage/bootcamps`}>
+                                    <Link href={`/user/${userId}/manage/bootcamps`}>
                                         <a className="btn btn-link text-secondary my-3">
                                             <i className="fas fa-chevron-left"></i>
                                             &nbsp; Manage Bootcamps
