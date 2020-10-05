@@ -7,7 +7,7 @@ import API_URL from '../../api/api';
 import BootcampCard from './card';
 
 const BootcampList = () => {
-    const { success, error, info, dismiss } = useToaster();
+    const { error } = useToaster();
     const [isLoading, setIsLoading] = useState(true);
     const [pagination, setPagination] = useState({});
     const [bootcamps, setBootcamps] = useState([]);
@@ -17,6 +17,10 @@ const BootcampList = () => {
     const [filterCareer, setFilterCareer] = useState('');
     const [filterRating, setFilterRating] = useState('');
     const [filterBudget, setFilterBudgett] = useState('');
+    const [distanceOn, setDistanceOn] = useState(false);
+    const [distancedBootcamps, setDistancedBootcamps] = useState([]);
+    const [filterMiles, setFilterMiles] = useState('');
+    const [filterZipcode, setFilterZipcode] = useState('');
 
     useEffect(() => {
         (async function () {
@@ -35,24 +39,28 @@ const BootcampList = () => {
             case 'career': setFilterCareer(value); break;
             case 'rating': setFilterRating(value); break;
             case 'budget': setFilterBudgett(value); break;
+            case 'miles': setFilterMiles(value); break;
+            case 'zipcode': setFilterZipcode(value); break;
             default: return null;
         }
 
     }, [])
 
     const handleReset = useCallback(() => {
-        setFilterOn(false); setFilterCareer(''); setFilterBudgett('')
-        setFilteredBootcamps([]); setFilterRating(''); setFilterQuery('')
+        setFilterOn(false); setFilterCareer(''); setFilterBudgett('');
+        setFilteredBootcamps([]); setFilterRating(''); setFilterQuery('');
+        setFilterMiles(''); setFilterZipcode(''); setDistanceOn(false)
     }, [])
 
     const handleSubmit = useCallback(async event => {
         event.preventDefault();
 
-        if (!filterBudget && !filterCareer && !filterRating)
+        if (!filterBudget || !filterCareer || !filterRating)
             return error('Please provide at least 1 filter')
 
-        setFilterOn(true);
-        setIsLoading(true);
+        setFilterOn(true); setIsLoading(true);
+        setDistanceOn(false); setFilterZipcode('');
+        setFilterMiles(''); setDistancedBootcamps([]);
 
         let query = '?';
 
@@ -68,6 +76,25 @@ const BootcampList = () => {
         setIsLoading(false);
 
     }, [filterCareer, filterRating, filterBudget])
+
+    const handleSubmitDistance = useCallback(async event => {
+        event.preventDefault();
+
+        if (!filterMiles || !filterZipcode)
+            return error('Please provide all the necessary distance filters')
+
+        setFilterOn(false); setFilteredBootcamps([]);
+        setIsLoading(true); setFilterQuery('');
+        setFilterCareer(''); setFilterRating('');
+        setFilterBudgett(''); setDistanceOn(true)
+
+        const url = `${API_URL}/api/v1/bootcamps/radius/${filterZipcode}/${filterMiles}`;
+        const raw = await fetch(url);
+        const parsed = await raw.json();
+
+        setDistancedBootcamps(parsed.data);
+        setIsLoading(false);
+    }, [filterMiles, filterZipcode])
 
     const handlePagination = useCallback(event => {
         const action = event.target.dataset.action;
@@ -122,7 +149,7 @@ const BootcampList = () => {
     }, [pagination])
 
     return (
-        <section className={`browse mt-5 ${styles.custom_mt}`}>
+        <section className={`browse mt - 5 ${styles.custom_mt}`}>
 
             <ToastContainer />
 
@@ -137,7 +164,7 @@ const BootcampList = () => {
                         />
 
                         <h4 className="mb-3">By Location</h4>
-                        <form className="mb-5">
+                        <form onSubmit={handleSubmitDistance} className="mb-5">
                             <div className="row">
                                 <div className="col-md-6">
                                     <div className="form-group">
@@ -145,6 +172,8 @@ const BootcampList = () => {
                                             type="text"
                                             className="form-control"
                                             name="miles"
+                                            value={filterMiles}
+                                            onChange={handleChange}
                                             placeholder="Miles From"
                                         />
                                     </div>
@@ -155,6 +184,8 @@ const BootcampList = () => {
                                             type="text"
                                             className="form-control"
                                             name="zipcode"
+                                            value={filterZipcode}
+                                            onChange={handleChange}
                                             placeholder="Enter Zipcode"
                                         />
                                     </div>
@@ -237,14 +268,18 @@ const BootcampList = () => {
 
                         {
                             !isLoading
-                                ? filterOn
+                                ? filterOn && !distanceOn
                                     ? filteredBootcamps.map((bootcamp, ind) =>
                                         <BootcampCard key={ind} bootcamp={bootcamp} />
                                     )
 
-                                    : bootcamps.map((bootcamp, ind) =>
-                                        <BootcampCard key={ind} bootcamp={bootcamp} />
-                                    )
+                                    : distanceOn
+                                        ? distancedBootcamps.map((bootcamp, ind) =>
+                                            <BootcampCard key={ind} bootcamp={bootcamp} />
+                                        )
+                                        : bootcamps.map((bootcamp, ind) =>
+                                            <BootcampCard key={ind} bootcamp={bootcamp} />
+                                        )
 
                                 : <h1>Loading... Please wait</h1>
                         }
@@ -254,7 +289,7 @@ const BootcampList = () => {
                             <ul className="pagination">
 
                                 {
-                                    pagination.prev
+                                    pagination.prev && !distanceOn
                                         ? <li className="page-item" onClick={handlePagination}>
                                             <span className="page-link" data-action='previous' >Previous</span>
                                         </li>
@@ -262,7 +297,7 @@ const BootcampList = () => {
                                 }
 
                                 {
-                                    pagination.msg && !pagination.prev && !pagination.next
+                                    pagination.msg && !pagination.prev && !pagination.next && !distanceOn
                                         ? <li className="page-item" onClick={handlePagination}>
                                             <span className="page-link" data-action='previous' >Go to Page 1</span>
                                         </li>
@@ -270,7 +305,7 @@ const BootcampList = () => {
                                 }
 
                                 {
-                                    pagination.next
+                                    pagination.next && !distanceOn
                                         ? <li className="page-item" onClick={handlePagination}>
                                             <span className="page-link" data-action='next' >Next</span>
                                         </li>
