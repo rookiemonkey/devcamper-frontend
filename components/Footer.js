@@ -3,8 +3,8 @@ import styles from '../styles/footer.module.css';
 const Footer = () => {
 
     return (
-        <footer className="page-footer font-small teal pt-4">
-            <div className={`container-fluid text-center text-md-left ${styles.upper_row}`}>
+        <footer className={`page-footer font-small teal pt-4 ${styles.upper_row}`}>
+            <div className={`container text-center text-md-left`}>
                 <div className="row">
                     <div className="col-md-6 mt-md-0 mt-3 p-5">
 
