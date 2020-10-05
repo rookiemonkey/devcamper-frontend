@@ -19,4 +19,4 @@ export const API_OPTIONS_DELETE = {
     },
 }
 
-export default 'https://krrb-prod-devamperapi.herokuapp.com/';
+export default 'https://krrb-prod-devamperapi.herokuapp.com';
