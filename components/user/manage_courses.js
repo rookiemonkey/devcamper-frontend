@@ -139,7 +139,11 @@ const ManageCourses = props => {
                                                 </article>
                                             ))
 
-                                            : null
+                                            : <div className="manage_loader_container">
+                                                <div className="spinner-border text-primary" role="status">
+                                                    <span className="sr-only">Loading...</span>
+                                                </div>
+                                            </div>
                                     }
                                 </div>
                         }

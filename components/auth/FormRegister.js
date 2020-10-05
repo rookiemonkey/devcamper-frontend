@@ -53,7 +53,7 @@ const RegisterForm = () => {
         setName(''); setEmail(''); setPassword('');
         setPasswordConfirm(''); setRole('');
         handleSetUser(parsed)
-        router.push('/')
+        router.push('/auth/login')
     })
 
     return (

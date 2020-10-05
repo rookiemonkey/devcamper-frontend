@@ -11,12 +11,14 @@ const ManageBootcamps = props => {
     const router = useRouter();
     const { user } = useAuth();
     const { error, info, dismiss, success } = useToaster();
+    const [isLoaded, setIsLoaded] = useState(false);
     const [bootcamps, setBootcamps] = useState(null);
     const [upload, setUpload] = useState(null);
 
     useEffect(() => {
         if (props.bootcamps) {
             setBootcamps(props.bootcamps)
+            setIsLoaded(true);
         }
     }, [props.bootcamps])
 
@@ -72,89 +74,98 @@ const ManageBootcamps = props => {
                             <h1 className="mb-4">Manage Bootcamp/s</h1>
 
                             {
-                                bootcamps && bootcamps.data.length > 0
-                                    ? bootcamps.data.map((bootcamp, ind) => (
-                                        <div key={ind} className="mb-5">
-                                            <div className="card mb-3">
-                                                <div className="row no-gutters">
-                                                    <div className="col-md-4">
-                                                        <img
-                                                            src={`${process.env.NEXT_PUBLIC_IMG_SRC}${bootcamp.photo}`}
-                                                            className="card-img"
-                                                            alt={bootcamp.name}
-                                                        />
-                                                    </div>
-                                                    <div className="col-md-8">
-                                                        <div className="card-body">
-                                                            <h5 className="card-title">
-                                                                <Link href={`/bootcamp/${bootcamp._id}`}>
-                                                                    <a className="text-primary" >
-                                                                        {bootcamp.name} &nbsp;
+                                isLoaded
+                                    ? bootcamps && bootcamps.data.length > 0
+                                        ? bootcamps.data.map((bootcamp, ind) => (
+                                            <div key={ind} className="mb-5">
+                                                <div className="card mb-3">
+                                                    <div className="row no-gutters">
+                                                        <div className="col-md-4">
+                                                            <img
+                                                                src={`${process.env.NEXT_PUBLIC_IMG_SRC}${bootcamp.photo}`}
+                                                                className="card-img"
+                                                                alt={bootcamp.name}
+                                                            />
+                                                        </div>
+                                                        <div className="col-md-8">
+                                                            <div className="card-body">
+                                                                <h5 className="card-title">
+                                                                    <Link href={`/bootcamp/${bootcamp._id}`}>
+                                                                        <a className="text-primary" >
+                                                                            {bootcamp.name} &nbsp;
                                                                         <span className="float-right badge badge-success">
-                                                                            {bootcamp.averageRating}
-                                                                        </span>
-                                                                    </a>
-                                                                </Link>
-                                                            </h5>
-                                                            <span className="badge badge-dark mb-2">
-                                                                {`${bootcamp.location.city}, ${bootcamp.location.country}`}
-                                                            </span>
-                                                            <p className="card-text">
-                                                                {bootcamp.careers.map(career => `${career}, `)}
-                                                            </p>
+                                                                                {bootcamp.averageRating}
+                                                                            </span>
+                                                                        </a>
+                                                                    </Link>
+                                                                </h5>
+                                                                <span className="badge badge-dark mb-2">
+                                                                    {`${bootcamp.location.city}, ${bootcamp.location.country}`}
+                                                                </span>
+                                                                <p className="card-text">
+                                                                    {bootcamp.careers.map(career => `${career}, `)}
+                                                                </p>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <form
-                                                className="mb-4"
-                                                onSubmit={event => {
-                                                    event.preventDefault();
-                                                    handleUpload(bootcamp._id);
-                                                }}
-                                                encType="multipart/form-data"
-                                            >
-                                                <div className="form-group">
-                                                    <div className="custom-file">
+                                                <form
+                                                    className="mb-4"
+                                                    onSubmit={event => {
+                                                        event.preventDefault();
+                                                        handleUpload(bootcamp._id);
+                                                    }}
+                                                    encType="multipart/form-data"
+                                                >
+                                                    <div className="form-group">
+                                                        <div className="custom-file">
 
-                                                        <input
-                                                            type="file"
-                                                            name="photo"
-                                                            className="custom-file-input"
-                                                            id="photo"
-                                                            accept="image/*"
-                                                            required
-                                                            onChange={handeChangeUpload}
-                                                        />
-                                                        <label
-                                                            className="custom-file-label"
-                                                            htmlFor="photo"
-                                                        >Add Bootcamp Image</label>
+                                                            <input
+                                                                type="file"
+                                                                name="photo"
+                                                                className="custom-file-input"
+                                                                id="photo"
+                                                                accept="image/*"
+                                                                required
+                                                                onChange={handeChangeUpload}
+                                                            />
+                                                            <label
+                                                                className="custom-file-label"
+                                                                htmlFor="photo"
+                                                            >Add Bootcamp Image</label>
 
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <input
-                                                    type="submit"
-                                                    className="btn btn-light btn-block"
-                                                    value="Upload Image"
-                                                />
-                                            </form>
+                                                    <input
+                                                        type="submit"
+                                                        className="btn btn-light btn-block"
+                                                        value="Upload Image"
+                                                    />
+                                                </form>
 
-                                            <Link href={`/bootcamp/${bootcamp._id}/edit`}>
-                                                <a className="btn btn-primary btn-block"
-                                                >Edit Bootcamp Details</a>
-                                            </Link>
+                                                <Link href={`/bootcamp/${bootcamp._id}/edit`}>
+                                                    <a className="btn btn-primary btn-block"
+                                                    >Edit Bootcamp Details</a>
+                                                </Link>
 
-                                            <a
-                                                onClick={() => { handleDelete(bootcamp._id) }}
-                                                className="btn btn-danger btn-block"
-                                            >Remove Bootcamp</a>
+                                                <a
+                                                    onClick={() => { handleDelete(bootcamp._id) }}
+                                                    className="btn btn-danger btn-block"
+                                                >Remove Bootcamp</a>
 
+                                            </div>
+                                        ))
+
+                                        : <ManageBootcampsNone />
+
+
+                                    : <div className="manage_loader_container">
+                                        <div className="spinner-border text-primary" role="status">
+                                            <span className="sr-only">Loading...</span>
                                         </div>
-                                    ))
+                                    </div>
 
-                                    : <ManageBootcampsNone />
                             }
 
                             <small className="form-text text-muted">

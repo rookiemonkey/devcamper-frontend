@@ -246,3 +246,11 @@ a.text-primary:hover {
 	justify-content: center;
 	align-items: center;
 }
+
+.manage_loader_container {
+	width: 100%;
+	height: 25vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
