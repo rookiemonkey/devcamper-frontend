@@ -1,28 +1,33 @@
 import "bootstrap/dist/css/bootstrap.css";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/globals.css";
-import { useEffect } from "react";
+import App from 'next/app'
 import { AuthProvider } from '../context/auth';
 import { ToasterProvider } from '../context/toaster';
 
-const MyApp = ({ Component, pageProps }) => {
-  
+class MyApp extends App {
 
-  useEffect(() => {
+  componentDidMount() {
     import("jquery")
       .then($ => {
         window.$ = window.jQuery = $;
         return import("bootstrap");
       });
-  }, []);
+  }
 
-  return (
-    <AuthProvider>
-      <ToasterProvider>
-        <Component {...pageProps} />
-      </ToasterProvider>
-    </AuthProvider>
-  )
+  render() {
+
+    const { Component, pageProps } = this.props;
+
+    return (
+      <AuthProvider>
+        <ToasterProvider>
+          <Component {...pageProps} />
+        </ToasterProvider>
+      </AuthProvider>
+
+    )
+  }
 }
 
 export default MyApp;
