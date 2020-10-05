@@ -3,8 +3,11 @@ import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import Showcase from '../components/index/Showcase';
 import Latest from '../components/index/Latest';
+import API_URL from '../api/api';
 
-function Home() {
+const Home = props => {
+  const { data } = props.response;
+
   return (
     <main>
 
@@ -16,12 +19,23 @@ function Home() {
 
       <Showcase />
 
-      <Latest />
+      <Latest
+        bootcamps={data}
+      />
 
       <Footer />
 
     </main>
   )
+}
+
+export async function getServerSideProps() {
+  const raw = await fetch(`${API_URL}/api/v1/bootcamps?limit=3&sort=createdAt`)
+  const parsed = await raw.json();
+
+  return {
+    props: { response: parsed }
+  }
 }
 
 export default Home;

@@ -11,7 +11,7 @@ import ManageCoursesNone from './manage_courses_none';
 const ManageCourses = props => {
     const router = useRouter();
     const { user } = useAuth();
-    const { success, info, error, dismiss } = useToaster();
+    const { info, error, dismiss } = useToaster();
     const [courses, setCourses] = useState({});
     const [bootcamps, setBootcamps] = useState({});
     const [isLoaded, setIsLoaded] = useState(false);
@@ -69,12 +69,12 @@ const ManageCourses = props => {
                                     {
                                         isLoaded
                                             ? bootcamps.data.map((bootcamp, ind) => (
-                                                <React.Fragment key={ind}>
+                                                <article key={ind} className="mb-5">
                                                     <div className="card mb-3">
                                                         <div className="row no-gutters">
                                                             <div className="col-md-4">
                                                                 <img
-                                                                    src={`${API_URL}/uploads/${bootcamp.photo}`} className="card-img"
+                                                                    src={`${process.env.NEXT_PUBLIC_IMG_SRC}${bootcamp.photo}`} className="card-img"
                                                                     alt={bootcamp.name}
                                                                 />
                                                             </div>
@@ -103,7 +103,7 @@ const ManageCourses = props => {
                                                     <Link href={`/bootcamp/${bootcamp.id}/courses/add`}>
                                                         <a className="btn btn-primary btn-block mb-4">
                                                             Add Bootcamp Course
-                                                </a>
+                                                        </a>
                                                     </Link>
 
                                                     <table className="table table-striped">
@@ -136,7 +136,7 @@ const ManageCourses = props => {
                                                             }
                                                         </tbody>
                                                     </table>
-                                                </React.Fragment>
+                                                </article>
                                             ))
 
                                             : null

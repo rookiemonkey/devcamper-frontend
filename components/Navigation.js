@@ -40,7 +40,7 @@ const Navigation = () => {
                         </li>
 
                         {
-                            user && user.success
+                            user && user.success && user.currentUser
                                 ? <React.Fragment>
                                     <li className="nav-item dropdown">
                                         <a
@@ -67,25 +67,25 @@ const Navigation = () => {
                                                 </a>
                                             </Link>
 
-                                            <Link
-                                                href={`/user/${user.currentUser._id}/manage/bootcamps`}
-                                            >
+                                            <Link href={`/user/${user.currentUser._id}/manage/bootcamps`}>
                                                 <a className="dropdown-item">
                                                     Manage Bootcamp
                                                 </a>
                                             </Link>
 
-                                            <Link
-                                                href={`/user/${user.currentUser._id}/manage/reviews`}
-                                            >
+
+                                            <Link href={`/user/${user.currentUser._id}/manage/courses`}>
+                                                <a className="dropdown-item"
+                                                >Manage Courses</a>
+                                            </Link>
+
+                                            <Link href={`/user/${user.currentUser._id}/manage/reviews`}>
                                                 <a className="dropdown-item">
                                                     Manage Reviews
                                                 </a>
                                             </Link>
 
-                                            <Link
-                                                href={`/user/${user.currentUser._id}/manage/account`}
-                                            >
+                                            <Link href={`/user/${user.currentUser._id}/manage/account`}>
                                                 <a className="dropdown-item">
                                                     Manage Account
                                                 </a>

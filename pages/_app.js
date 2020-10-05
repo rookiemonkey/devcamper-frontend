@@ -6,6 +6,7 @@ import { AuthProvider } from '../context/auth';
 import { ToasterProvider } from '../context/toaster';
 
 const MyApp = ({ Component, pageProps }) => {
+  
 
   useEffect(() => {
     import("jquery")

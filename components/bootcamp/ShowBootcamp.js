@@ -138,7 +138,7 @@ const ShowBootcamp = props => {
                         <div className="col-md-4">
 
                             <img
-                                src={`http://localhost:5000/uploads/${photo}`} className="img-thumbnail"
+                                src={`${process.env.NEXT_PUBLIC_IMG_SRC}${photo}`} className="img-thumbnail"
                                 alt={name}
                             />
 

@@ -1,6 +1,5 @@
 import styles from '../../styles/forms.module.css';
 import Link from 'next/link';
-import API_URL from '../../api/api';
 
 const BootcampList = props => {
     const { bootcamps } = props;
@@ -102,7 +101,7 @@ const BootcampList = props => {
                                     <div className="row no-gutters">
                                         <div className="col-md-4">
                                             <img
-                                                src={`${API_URL}/uploads/${bootcamp.photo}`}
+                                                src={`${process.env.NEXT_PUBLIC_IMG_SRC}/${bootcamp.photo}`}
                                                 className="card-img"
                                                 alt={bootcamp.name}
                                             />

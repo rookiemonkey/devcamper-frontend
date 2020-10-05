@@ -1,5 +1,6 @@
 .custom_mt {
     margin-top: 6rem !important;
+    min-height: 100vh;
 }
 
 .custom_header {

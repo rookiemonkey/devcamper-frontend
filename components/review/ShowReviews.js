@@ -57,7 +57,7 @@ const Reviews = props => {
                     <div className="col-md-4">
 
                         <img
-                            src={`http://localhost:5000/uploads/${bootcampData.photo}`} className="img-thumbnail"
+                            src={`${process.env.NEXT_PUBLIC_IMG_SRC}${bootcampData.photo}`} className="img-thumbnail"
                             alt={bootcampData.name}
                         />
 

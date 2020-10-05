@@ -6,7 +6,7 @@ const Showcase = () => {
         <section className={styles.showcase}>
             <div className={styles.dark_overlay}>
                 <div className={`${styles.showcase_inner} container`}>
-                    <h1 className="display-4">Find a Code Bootcamp</h1>
+                    <h1 className="display-4">Find a Coding Bootcamp</h1>
                     <p className="lead">
                         Find, rate and read reviews on coding bootcamps
 				    </p>

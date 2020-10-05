@@ -30,7 +30,7 @@ const Footer = () => {
             </div>
 
             <div className={`footer-copyright text-center py-3 ${styles.lower_row}`}>
-                © {new Date().getFullYear()} Copyright &nbsp; | &nbsp; <i className="fas fa-laptop-code"></i> DevCamper
+                © {new Date().getFullYear()} Copyright &nbsp; | &nbsp; <i className="fas fa-laptop-code"></i> &nbsp; DevCamper
             </div>
 
         </footer>

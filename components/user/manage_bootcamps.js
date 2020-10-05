@@ -10,7 +10,7 @@ import ManageBootcampsNone from './manage_bootcamps_none';
 const ManageBootcamps = props => {
     const router = useRouter();
     const { user } = useAuth();
-    const { error, info, dismiss } = useToaster();
+    const { error, info, dismiss, success } = useToaster();
     const [bootcamps, setBootcamps] = useState(null);
     const [upload, setUpload] = useState(null);
 
@@ -74,12 +74,12 @@ const ManageBootcamps = props => {
                             {
                                 bootcamps && bootcamps.data.length > 0
                                     ? bootcamps.data.map((bootcamp, ind) => (
-                                        <div key={ind} >
+                                        <div key={ind} className="mb-5">
                                             <div className="card mb-3">
                                                 <div className="row no-gutters">
                                                     <div className="col-md-4">
                                                         <img
-                                                            src={`http://localhost:5000/uploads/${bootcamp.photo}`}
+                                                            src={`${process.env.NEXT_PUBLIC_IMG_SRC}${bootcamp.photo}`}
                                                             className="card-img"
                                                             alt={bootcamp.name}
                                                         />
@@ -124,6 +124,7 @@ const ManageBootcamps = props => {
                                                             className="custom-file-input"
                                                             id="photo"
                                                             accept="image/*"
+                                                            required
                                                             onChange={handeChangeUpload}
                                                         />
                                                         <label
@@ -143,11 +144,6 @@ const ManageBootcamps = props => {
                                             <Link href={`/bootcamp/${bootcamp._id}/edit`}>
                                                 <a className="btn btn-primary btn-block"
                                                 >Edit Bootcamp Details</a>
-                                            </Link>
-
-                                            <Link href={`/user/${user.currentUser._id}/manage/courses`}>
-                                                <a className="btn btn-secondary btn-block"
-                                                >Manage Courses</a>
                                             </Link>
 
                                             <a

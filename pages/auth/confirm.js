@@ -1,4 +1,4 @@
-import styles from '../../styles/confirm.module.css'
+import styles from '../../styles/forms.module.css'
 import Head from 'next/head'
 import React, { useEffect, useState } from 'react';
 import Navigation from '../../components/Navigation';
