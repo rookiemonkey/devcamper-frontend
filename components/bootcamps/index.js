@@ -1,5 +1,4 @@
 import styles from '../../styles/forms.module.css';
-import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import useToaster from '../../context/toaster';
@@ -55,7 +54,7 @@ const BootcampList = () => {
     const handleSubmit = useCallback(async event => {
         event.preventDefault();
 
-        if (!filterBudget || !filterCareer || !filterRating)
+        if (!filterBudget && !filterCareer && !filterRating)
             return error('Please provide at least 1 filter')
 
         setFilterOn(true); setIsLoading(true);
@@ -101,6 +100,9 @@ const BootcampList = () => {
         const nextPage = pagination.next ? pagination.next.page : null;
         const prevPage = pagination.prev ? pagination.prev.page : null;
         setIsLoading(true);
+
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
 
         switch (action) {
             case 'previous':
@@ -281,7 +283,11 @@ const BootcampList = () => {
                                             <BootcampCard key={ind} bootcamp={bootcamp} />
                                         )
 
-                                : <h1>Loading... Please wait</h1>
+                                : <div className="browse_loader_container">
+                                    <div className="spinner-border text-primary" role="status">
+                                        <span className="sr-only">Loading...</span>
+                                    </div>
+                                </div>
                         }
 
 
@@ -289,7 +295,7 @@ const BootcampList = () => {
                             <ul className="pagination">
 
                                 {
-                                    pagination.prev && !distanceOn
+                                    !isLoading && pagination.prev && !distanceOn
                                         ? <li className="page-item" onClick={handlePagination}>
                                             <span className="page-link" data-action='previous' >Previous</span>
                                         </li>
@@ -297,7 +303,7 @@ const BootcampList = () => {
                                 }
 
                                 {
-                                    pagination.msg && !pagination.prev && !pagination.next && !distanceOn
+                                    !isLoading && pagination.msg && !pagination.prev && !pagination.next && !distanceOn
                                         ? <li className="page-item" onClick={handlePagination}>
                                             <span className="page-link" data-action='previous' >Go to Page 1</span>
                                         </li>
@@ -305,7 +311,7 @@ const BootcampList = () => {
                                 }
 
                                 {
-                                    pagination.next && !distanceOn
+                                    !isLoading && pagination.next && !distanceOn
                                         ? <li className="page-item" onClick={handlePagination}>
                                             <span className="page-link" data-action='next' >Next</span>
                                         </li>

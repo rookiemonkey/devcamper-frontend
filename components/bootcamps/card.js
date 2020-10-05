@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import formatPrice from '../../utilities/formatPrice';
 
 const BootcampCard = props => {
     const { bootcamp } = props;
@@ -19,6 +20,7 @@ const BootcampCard = props => {
                             <Link href={`/bootcamp/${bootcamp._id}`}>
                                 <a>
                                     {bootcamp.name}
+
                                     <span className="float-right badge badge-success"
                                     >{bootcamp.averageRating}</span>
                                 </a>
@@ -36,6 +38,13 @@ const BootcampCard = props => {
                                 ))
                             }
                         </p>
+
+                        <small
+                            className="float-right"
+                            style={{ position: 'relative', bottom: '15px' }}
+                        ><i className="fas fa-money-bill-wave-alt text-success"></i> &nbsp;
+                        ${formatPrice(bootcamp.averageCost)} (Average)</small>
+
                     </div>
                 </div>
             </div>
