@@ -48,6 +48,11 @@ const ManageCourses = props => {
         router.reload();
     }, [])
 
+    const handleImageError = useCallback(event => {
+        event.target.onerror = null;
+        event.target.src = `${process.env.NEXT_PUBLIC_IMG_SRC}no-photo.png`
+    }, [])
+
     return (
         <section className={`container mt-5 ${styles.custom_mt}`}>
 
@@ -77,7 +82,9 @@ const ManageCourses = props => {
                                                         <div className="row no-gutters">
                                                             <div className="col-md-4">
                                                                 <img
-                                                                    src={`${process.env.NEXT_PUBLIC_IMG_SRC}${bootcamp.photo}`} className="card-img"
+                                                                    src={`${process.env.NEXT_PUBLIC_IMG_SRC}${bootcamp.photo}`}
+                                                                    className="card-img"
+                                                                    onError={handleImageError}
                                                                     alt={bootcamp.name}
                                                                 />
                                                             </div>

@@ -1,10 +1,16 @@
 import Link from 'next/link';
+import { useCallback } from 'react';
 import styles from '../../styles/forms.module.css'
 
 const Reviews = props => {
     const { bootcamp, reviews } = props;
     const { data: bootcampData } = bootcamp;
     const { data: reviewsData } = reviews;
+
+    const handleImageError = useCallback(event => {
+        event.target.onerror = null;
+        event.target.src = `${process.env.NEXT_PUBLIC_IMG_SRC}no-photo.png`
+    }, [])
 
     return (
         <section className={`bootcamp mt-5 ${styles.custom_mt}`}>
@@ -59,6 +65,7 @@ const Reviews = props => {
                         <img
                             src={`${process.env.NEXT_PUBLIC_IMG_SRC}${bootcampData.photo}`} className="img-thumbnail"
                             alt={bootcampData.name}
+                            onError={handleImageError}
                         />
 
                         <h1 className="text-center my-4">

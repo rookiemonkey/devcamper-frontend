@@ -2,7 +2,7 @@ import styles from '../../styles/forms.module.css';
 import bootcamp from '../../styles/bootcamp.module.css';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import mapboxgl from 'mapbox-gl';
 import formatPrice from '../../utilities/formatPrice';
 
@@ -40,6 +40,11 @@ const ShowBootcamp = props => {
         });
 
     }, [mapContainer]);
+
+    const handleImageError = useCallback(event => {
+        event.target.onerror = null;
+        event.target.src = `${process.env.NEXT_PUBLIC_IMG_SRC}no-photo.png`
+    }, [])
 
     return (
         <React.Fragment>
@@ -138,7 +143,9 @@ const ShowBootcamp = props => {
                         <div className="col-md-4">
 
                             <img
-                                src={`${process.env.NEXT_PUBLIC_IMG_SRC}${photo}`} className="img-thumbnail"
+                                src={`${process.env.NEXT_PUBLIC_IMG_SRC}${photo}`}
+                                onError={handleImageError}
+                                className="img-thumbnail"
                                 alt={name}
                             />
 

@@ -1,7 +1,13 @@
 import Link from 'next/link'
+import { useCallback } from 'react';
 
 const Latest = props => {
     const { bootcamps } = props;
+
+    const handleImageError = useCallback(event => {
+        event.target.onerror = null;
+        event.target.src = `${process.env.NEXT_PUBLIC_IMG_SRC}no-photo.png`
+    }, [])
 
     return (
         <section className="latest py-5 bg-light">
@@ -13,7 +19,12 @@ const Latest = props => {
                             ? bootcamps.map((bootcamp, ind) => (
                                 <div className="card" key={ind}>
 
-                                    <img src={`${process.env.NEXT_PUBLIC_IMG_SRC}${bootcamp.photo}`} className="card-img-top" alt={bootcamp.name} />
+                                    <img
+                                        src={`${process.env.NEXT_PUBLIC_IMG_SRC}${bootcamp.photo}`}
+                                        className="card-img-top"
+                                        onError={handleImageError}
+                                        alt={bootcamp.name}
+                                    />
 
                                     <div className="card-body">
 

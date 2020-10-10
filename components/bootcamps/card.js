@@ -1,8 +1,14 @@
 import Link from 'next/link'
+import { useCallback } from 'react';
 import formatPrice from '../../utilities/formatPrice';
 
 const BootcampCard = props => {
     const { bootcamp } = props;
+
+    const handleImageError = useCallback(event => {
+        event.target.onerror = null;
+        event.target.src = `${process.env.NEXT_PUBLIC_IMG_SRC}no-photo.png`
+    }, [])
 
     return (
         <div className="card mb-3">
@@ -10,6 +16,7 @@ const BootcampCard = props => {
                 <div className="col-md-4">
                     <img
                         src={`${process.env.NEXT_PUBLIC_IMG_SRC}/${bootcamp.photo}`}
+                        onError={handleImageError}
                         className="card-img"
                         alt={bootcamp.name}
                     />
