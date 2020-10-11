@@ -139,14 +139,20 @@ const ManageBootcamps = props => {
                                                             <label
                                                                 className="custom-file-label"
                                                                 htmlFor="photo"
-                                                            >Add Bootcamp Image</label>
+                                                            >
+                                                                { upload ? upload.name : null }
+                                                            </label>
 
                                                         </div>
                                                     </div>
                                                     <input
                                                         type="submit"
                                                         className="btn btn-light btn-block"
-                                                        value="Upload Image"
+                                                        value={
+                                                            bootcamp.photo == 'no-photo.png'
+                                                                ? 'Add Bootcamp Image'
+                                                                : 'Update Bootcamp Image'
+                                                        }
                                                     />
                                                 </form>
 
