@@ -2,6 +2,7 @@ import styles from '../../styles/forms.module.css';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 import useAuth from '../../context/auth';
 import useToaster from '../../context/toaster';
 import API_URL, { API_OPTIONS_DELETE, API_OPTIONS_PUT } from '../../api/api';
@@ -61,8 +62,8 @@ const ManageBootcamps = props => {
             return error(parsed.msg)
         }
 
-        success('Successfully deleted the bootcamp!')
-        setTimeout(() => router.reload(), 2000)
+        success('Successfully uploaded the bootcamp image! Please wait while we are refreshing everything for you')
+        setTimeout(() => router.reload(), 4000)
     })
 
     const handleImageError = useCallback(event => {
@@ -72,6 +73,9 @@ const ManageBootcamps = props => {
 
     return (
         <section className={`container mt-5 ${styles.custom_mt}`}>
+
+            <ToastContainer />
+
             <div className="row">
                 <div className="col-md-8 m-auto">
                     <div className="card bg-white py-2 px-4">
@@ -140,7 +144,7 @@ const ManageBootcamps = props => {
                                                                 className="custom-file-label"
                                                                 htmlFor="photo"
                                                             >
-                                                                { upload ? upload.name : null }
+                                                                {upload ? upload.name : null}
                                                             </label>
 
                                                         </div>

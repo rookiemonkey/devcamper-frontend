@@ -9,8 +9,9 @@ import API_URL, { API_OPTIONS } from '../../api/api';
 
 const LoginFormOTP = () => {
     const router = useRouter();
-    const { info, error, dismiss } = useToaster();
+    const { info, error, dismiss, success } = useToaster();
     const { handleSetUser } = useAuth();
+    const [disabled, setDisabled] = useState(false);
     const [email, setEmail] = useState('');
     const [token, setToken] = useState('');
 
@@ -27,6 +28,7 @@ const LoginFormOTP = () => {
     const handleSubmit = useCallback(async event => {
         event.preventDefault()
         const infoId = info('Please wait ...')
+        setDisabled(true)
 
         const options = {
             ...API_OPTIONS,
@@ -38,12 +40,17 @@ const LoginFormOTP = () => {
         dismiss(infoId)
 
         if (!parsed.success) {
+            setDisabled(false)
             return error(parsed.msg)
         }
 
-        setEmail(''); setToken('');
-        handleSetUser(parsed)
-        router.push('/')
+        success('Successfully logged in! Please wait while we are redirecting you')
+
+        setTimeout(() => {
+            setEmail(''); setToken('');
+            handleSetUser(parsed)
+            router.push('/')
+        }, 4000)
     })
 
     return (

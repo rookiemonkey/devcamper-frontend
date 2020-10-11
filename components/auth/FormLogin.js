@@ -9,8 +9,9 @@ import API_URL, { API_OPTIONS } from '../../api/api';
 
 const LoginForm = () => {
     const router = useRouter();
-    const { info, error, dismiss } = useToaster();
+    const { info, error, dismiss, success } = useToaster();
     const { handleSetUser } = useAuth();
+    const [disabled, setDisabled] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -27,6 +28,7 @@ const LoginForm = () => {
     const handleSubmit = useCallback(async event => {
         event.preventDefault()
         const infoId = info('Please wait ...')
+        setDisabled(true)
 
         const options = {
             ...API_OPTIONS,
@@ -38,12 +40,17 @@ const LoginForm = () => {
         dismiss(infoId)
 
         if (!parsed.success) {
+            setDisabled(false)
             return error(parsed.msg)
         }
 
-        setEmail(''); setPassword('');
-        handleSetUser(parsed)
-        router.push('/')
+        success('Successfully logged in! Please wait while we are redirecting you')
+
+        setTimeout(() => {
+            setEmail(''); setPassword('');
+            handleSetUser(parsed)
+            router.push('/')
+        }, 4000)
     })
 
     return (
@@ -81,6 +88,7 @@ const LoginForm = () => {
                                             value={email}
                                             onChange={handleChange}
                                             required
+                                            disabled={disabled}
                                         />
                                     </div>
                                     <div className="form-group mb-4">
@@ -93,6 +101,7 @@ const LoginForm = () => {
                                             value={password}
                                             onChange={handleChange}
                                             required
+                                            disabled={disabled}
                                         />
                                     </div>
                                     <div className="form-group">
@@ -100,6 +109,7 @@ const LoginForm = () => {
                                             type="submit"
                                             value="Login"
                                             className="btn btn-primary btn-block"
+                                            disabled={disabled}
                                         />
                                     </div>
                                 </form>
